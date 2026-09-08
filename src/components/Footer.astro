@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import { site, NAV_LINKS } from '../data/site';
+import logoImg from '../assets/logo.png';
+
+const year = new Date().getFullYear();
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`;
+---
+
+<footer class="bg-navy-900 text-navy-100">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
+    <div>
+      <div class="flex items-center gap-3">
+        <Image
+          src={logoImg}
+          alt={`${site.churchName} Logo`}
+          width={48}
+          height={48}
+          class="h-12 w-12 rounded-full bg-white object-cover"
+        />
+        <p class="text-lg font-bold text-white">{site.churchName}</p>
+      </div>
+      <p class="mt-4 text-sm leading-7 text-navy-200">{site.tagline}</p>
+      <div class="mt-4 flex gap-3">
+        {
+          site.facebookUrl && (
+            <a
+              href={site.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook 粉絲專頁"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-brick-600"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5V11H8.5v3H11v7h2.5z" />
+              </svg>
+            </a>
+          )
+        }
+        {
+          site.youtubeChannelUrl && (
+            <a
+              href={site.youtubeChannelUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube 頻道"
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-brick-600"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.9 4.8 12 4.8 12 4.8s-5.9 0-7.6.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12a29 29 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.7.4 7.6.4 7.6.4s5.9 0 7.6-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 22 12a29 29 0 0 0-.4-4.8zM10 15.2V8.8L15.5 12 10 15.2z" />
+              </svg>
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    <nav aria-label="頁尾選單">
+      <p class="text-sm font-bold tracking-widest text-sand-300">快速連結</p>
+      <ul class="mt-4 space-y-2.5 text-[15px]">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a href={link.href} class="text-navy-100 transition-colors hover:text-white hover:underline hover:underline-offset-4">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div>
+      <p class="text-sm font-bold tracking-widest text-sand-300">聯絡我們</p>
+      <ul class="mt-4 space-y-2.5 text-[15px] leading-7">
+        <li>
+          <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white hover:underline hover:underline-offset-4">
+            {site.address}
+          </a>
+        </li>
+        <li>
+          <a href={`tel:${site.phone.replace(/[^+\d]/g, '')}`} class="transition-colors hover:text-white hover:underline hover:underline-offset-4">
+            {site.phone}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${site.email}`} class="transition-colors hover:text-white hover:underline hover:underline-offset-4">
+            {site.email}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-5 text-sm text-navy-300 sm:flex-row sm:px-6">
+      <p>© {year} {site.churchName} 版權所有</p>
+      <p>以心靈誠實敬拜</p>
+    </div>
+  </div>
+</footer>

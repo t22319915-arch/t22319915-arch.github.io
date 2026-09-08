@@ -1,0 +1,27 @@
+---
+import type { ServiceTime } from '../data/site';
+
+interface Props {
+  serviceTimes: ServiceTime[];
+}
+
+const { serviceTimes } = Astro.props;
+---
+
+<div class="overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-sand-200">
+  <ul class="divide-y divide-sand-100">
+    {
+      serviceTimes.map((s) => (
+        <li class="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr_auto] sm:items-center sm:gap-4 sm:px-6">
+          <p class="font-bold text-navy-800">{s.name}</p>
+          <p class="text-neutral-700">
+            {s.time}
+            {s.location && <span class="text-neutral-500">・{s.location}</span>}
+            {s.note && <span class="block text-sm text-neutral-500">{s.note}</span>}
+          </p>
+          <span class="hidden text-sm text-neutral-400 sm:block">每週固定聚會</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>

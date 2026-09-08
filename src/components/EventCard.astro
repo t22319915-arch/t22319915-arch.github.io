@@ -1,0 +1,48 @@
+---
+import { formatDateShort, categoryLabel } from '../utils/date';
+
+interface Props {
+  title: string;
+  href: string;
+  date: Date;
+  category: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, href, date, category, description, image } = Astro.props;
+---
+
+<article class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-sand-200 transition-shadow hover:shadow-lg">
+  <a href={href} class="block">
+    {image ? (
+      <div class="aspect-[16/9] w-full overflow-hidden bg-sand-100">
+        <img
+          src={image}
+          alt={title}
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+    ) : (
+      <div class="flex aspect-[16/9] w-full items-center justify-center bg-gradient-to-br from-navy-700 to-navy-900">
+        <span class="px-6 text-center text-lg font-bold leading-8 text-white/90">{title}</span>
+      </div>
+    )}
+    <div class="p-5">
+      <div class="flex items-center gap-2 text-xs">
+        <span class="rounded bg-navy-700 px-2 py-0.5 font-bold text-white">
+          {categoryLabel(category)}
+        </span>
+        <time datetime={date.toISOString()} class="text-neutral-500">
+          {formatDateShort(date)}
+        </time>
+      </div>
+      <h3 class="mt-2 line-clamp-2 font-bold leading-7 text-navy-900 group-hover:text-brick-700 group-hover:underline group-hover:underline-offset-4">
+        {title}
+      </h3>
+      {description && <p class="mt-1.5 line-clamp-2 text-sm leading-6 text-neutral-500">{description}</p>}
+    </div>
+  </a>
+</article>

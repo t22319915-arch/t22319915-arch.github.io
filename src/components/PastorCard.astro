@@ -1,0 +1,36 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  pastor: CollectionEntry<'pastors'>;
+  showBio?: boolean;
+}
+
+const { pastor, showBio = false } = Astro.props;
+const { Content } = showBio ? await render(pastor) : { Content: null };
+---
+
+<article class="rounded-2xl bg-white p-6 text-center shadow-md ring-1 ring-sand-200">
+  {pastor.data.photo ? (
+    <img
+      src={pastor.data.photo}
+      alt={pastor.data.name}
+      loading="lazy"
+      decoding="async"
+      class="mx-auto h-28 w-28 rounded-full object-cover ring-2 ring-sand-200"
+    />
+  ) : (
+    <div class="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-navy-100 text-4xl font-black text-navy-700">
+      {pastor.data.name.charAt(0)}
+    </div>
+  )}
+  <h3 class="mt-4 text-lg font-bold text-navy-900">{pastor.data.name}</h3>
+  <p class="mt-1 inline-block rounded-full bg-sand-100 px-3 py-0.5 text-sm font-medium text-navy-700">
+    {pastor.data.title}
+  </p>
+  {showBio && Content && (
+    <div class="rich-text mt-4 text-left text-[15px]">
+      <Content />
+    </div>
+  )}
+</article>

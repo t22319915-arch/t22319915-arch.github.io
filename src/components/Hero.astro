@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import heroImg from '../assets/church-exterior.jpg';
+
+interface Props {
+  liveHref?: string;
+}
+
+const { liveHref = '#live' } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-navy-900">
+  <Image
+    src={heroImg}
+    alt="台中北屯貴格會教會外觀"
+    widths={[768, 1280, 1920]}
+    sizes="100vw"
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-900/70 to-navy-900/20"></div>
+
+  <div class="relative mx-auto flex max-w-6xl flex-col justify-center px-4 py-24 sm:px-6 sm:py-32">
+    <p class="mb-3 inline-flex w-fit items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-sand-200 backdrop-blur">
+      禮拜日 09:00 主日禮拜
+    </p>
+    <h1 class="text-4xl font-black leading-tight text-white sm:text-5xl">
+      {site.churchName}
+    </h1>
+    <p class="mt-4 max-w-xl text-lg leading-8 text-navy-100">{site.tagline}</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a
+        href={liveHref}
+        class="inline-flex items-center gap-2 rounded-xl bg-brick-600 px-6 py-3 font-bold text-white shadow-lg transition-colors hover:bg-brick-500"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5.5v13l11-6.5-11-6.5z" />
+        </svg>
+        觀看本週直播
+      </a>
+      <a
+        href="#services"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/40 px-6 py-3 font-bold text-white backdrop-blur transition-colors hover:bg-white/10"
+      >
+        聚會資訊
+      </a>
+    </div>
+  </div>
+</section>

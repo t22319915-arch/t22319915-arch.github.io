@@ -1,0 +1,93 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { site } from '../data/site';
+
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`;
+---
+
+<Layout title="聯絡我們" description={`聯絡${site.churchName}：地址、電話、Email 與交通資訊。`}>
+  <section class="bg-navy-900">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <p class="text-sm font-bold tracking-[0.2em] text-sand-300">CONTACT</p>
+      <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">聯絡我們</h1>
+      <p class="mt-3 text-navy-100">歡迎來訪、來電或來信，期待與您相見。</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="INFO" title="教會資訊" />
+    <div class="grid gap-5 sm:grid-cols-3">
+      <div class="rounded-2xl bg-white p-6 shadow-md ring-1 ring-sand-200">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-navy-700 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.7 13.9a8 8 0 1 0-11.4 0L12 21l5.7-7.1zM12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+          </svg>
+        </div>
+        <h2 class="mt-4 font-bold text-navy-900">地址</h2>
+        <p class="mt-1 leading-7 text-neutral-600">{site.address}</p>
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-sm font-bold text-brick-600 hover:text-brick-700 hover:underline hover:underline-offset-4">
+          在 Google 地圖開啟 →
+        </a>
+      </div>
+
+      <div class="rounded-2xl bg-white p-6 shadow-md ring-1 ring-sand-200">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-navy-700 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5.5C3 4.1 4.1 3 5.5 3h2L9.5 8 7.5 9.5a12 12 0 0 0 7 7L16 14.5l5 2v2c0 1.4-1.1 2.5-2.5 2.5C10.4 21 3 13.6 3 5.5z" />
+          </svg>
+        </div>
+        <h2 class="mt-4 font-bold text-navy-900">電話</h2>
+        <p class="mt-1 leading-7 text-neutral-600">{site.phone}</p>
+        <a href={`tel:${site.phone.replace(/[^+\d]/g, '')}`} class="mt-3 inline-block text-sm font-bold text-brick-600 hover:text-brick-700 hover:underline hover:underline-offset-4">
+          撥打電話 →
+        </a>
+      </div>
+
+      <div class="rounded-2xl bg-white p-6 shadow-md ring-1 ring-sand-200">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-navy-700 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1 2.4V17h14V8.4l-7 4.5-7-4.5z" />
+          </svg>
+        </div>
+        <h2 class="mt-4 font-bold text-navy-900">Email</h2>
+        <p class="mt-1 break-all leading-7 text-neutral-600">{site.email}</p>
+        <a href={`mailto:${site.email}`} class="mt-3 inline-block text-sm font-bold text-brick-600 hover:text-brick-700 hover:underline hover:underline-offset-4">
+          寫信給我們 →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <SectionHeading kicker="MAP" title="交通位置" />
+      <div class="overflow-hidden rounded-2xl shadow-md ring-1 ring-sand-200">
+        <iframe
+          src={site.mapEmbedUrl}
+          title={`${site.churchName}地圖`}
+          class="h-[380px] w-full border-0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        />
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3">
+        {
+          site.facebookUrl && (
+            <a href={site.facebookUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl bg-navy-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-navy-600">
+              Facebook 粉絲專頁
+            </a>
+          )
+        }
+        {
+          site.youtubeChannelUrl && (
+            <a href={site.youtubeChannelUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl bg-brick-600 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brick-500">
+              YouTube 頻道
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

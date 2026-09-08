@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import LiveStreamCard from '../../components/LiveStreamCard.astro';
+import AlbumCard from '../../components/AlbumCard.astro';
+import { toThumbnailUrl, toWatchUrl } from '../../utils/youtube';
+import { formatDate } from '../../utils/date';
+import { site } from '../../data/site';
+
+const slugOf = (id: string) => id.replace(/\.md$/, '');
+const streams = (await getCollection('liveStream')).sort((a, b) => +b.data.date - +a.data.date);
+const current = streams.find((s) => s.data.isCurrentWeek) ?? streams[0] ?? null;
+const history = streams.filter((s) => s !== current);
+const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft)).sort(
+  (a, b) => +b.data.date - +a.data.date,
+);
+---
+
+<Layout title="影音專區" description={`${site.churchName}主日禮拜直播影音與活動照片。`}>
+  <section class="bg-navy-900">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <p class="text-sm font-bold tracking-[0.2em] text-sand-300">MEDIA</p>
+      <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">影音專區</h1>
+      <p class="mt-3 text-navy-100">主日直播、過往講道影音與活動照片。</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="LIVE" title="主日直播" />
+    <LiveStreamCard
+      stream={
+        current
+          ? {
+              title: current.data.title,
+              date: current.data.date,
+              youtubeUrl: current.data.youtubeUrl,
+              description: current.data.description,
+            }
+          : null
+      }
+    />
+  </section>
+
+  {
+    history.length > 0 && (
+      <section class="bg-white">
+        <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+          <SectionHeading kicker="ARCHIVE" title="過往直播" description="點擊縮圖前往 YouTube 觀看完整影片。" />
+          <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {history.map((s) => {
+              const thumb = toThumbnailUrl(s.data.youtubeUrl);
+              return (
+                <li>
+                  <a
+                    href={toWatchUrl(s.data.youtubeUrl)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group flex gap-4 rounded-2xl bg-sand-50 p-3 ring-1 ring-sand-200 transition-shadow hover:shadow-md"
+                  >
+                    <div class="relative h-20 w-32 shrink-0 overflow-hidden rounded-xl bg-navy-900">
+                      {thumb ? (
+                        <img src={thumb} alt="" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+                      ) : null}
+                      <span class="absolute inset-0 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white/90" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5.5v13l11-6.5-11-6.5z" />
+                        </svg>
+                      </span>
+                    </div>
+                    <div class="min-w-0">
+                      <p class="line-clamp-2 text-[15px] font-bold leading-6 text-navy-900 group-hover:text-brick-700 group-hover:underline group-hover:underline-offset-4">
+                        {s.data.title}
+                      </p>
+                      <time datetime={s.data.date.toISOString()} class="mt-1 block text-sm text-neutral-500">
+                        {formatDate(s.data.date)}
+                      </time>
+                    </div>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="GALLERY" title="活動相簿" description="相簿依活動日期排序，點擊進入瀏覽全部照片。" />
+    {
+      albums.length > 0 ? (
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {albums.map((a) => (
+            <AlbumCard
+              title={a.data.title}
+              href={`/media/gallery/${slugOf(a.id)}`}
+              date={a.data.date}
+              cover={a.data.cover ?? a.data.photos[0]}
+              photoCount={a.data.photos.length}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="rounded-2xl bg-white p-8 text-center text-neutral-500 shadow-md ring-1 ring-sand-200">
+          活動照片準備中，敬請期待。
+        </p>
+      )
+    }
+  </section>
+</Layout>

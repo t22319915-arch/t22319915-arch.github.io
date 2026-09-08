@@ -1,17 +1,145 @@
 ---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import AnnouncementBar from '../components/AnnouncementBar.astro';
+import LiveStreamCard from '../components/LiveStreamCard.astro';
+import ServiceTimeTable from '../components/ServiceTimeTable.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import EventCard from '../components/EventCard.astro';
+import PastorCard from '../components/PastorCard.astro';
+import AlbumCard from '../components/AlbumCard.astro';
+import { site } from '../data/site';
 
+const slugOf = (id: string) => id.replace(/\.md$/, '');
+const byDateDesc = (a: { data: { date: Date } }, b: { data: { date: Date } }) =>
+  +b.data.date - +a.data.date;
+
+const allNews = (await getCollection('announcements', ({ data }) => !data.draft)).sort(byDateDesc);
+const pinned = allNews.filter((a) => a.data.pinned).slice(0, 3);
+const latestNews = allNews.slice(0, 6);
+
+const streams = (await getCollection('liveStream')).sort(byDateDesc);
+const current = streams.find((s) => s.data.isCurrentWeek) ?? streams[0] ?? null;
+
+const pastors = (await getCollection('pastors', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft))
+  .sort(byDateDesc)
+  .slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="首頁">
+  <Hero liveHref="#live" />
+
+  <AnnouncementBar
+    items={pinned.map((a) => ({
+      title: a.data.title,
+      href: `/announcements/${slugOf(a.id)}`,
+      date: a.data.date,
+      category: a.data.category,
+    }))}
+  />
+
+  <section id="live" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading
+      kicker="LIVE"
+      title="本週主日直播"
+      description="每週日早上 9:00 主日禮拜同步直播，歡迎線上一起敬拜。"
+      linkHref="/media"
+      linkLabel="更多影音"
+    />
+    <LiveStreamCard
+      stream={
+        current
+          ? {
+              title: current.data.title,
+              date: current.data.date,
+              youtubeUrl: current.data.youtubeUrl,
+              description: current.data.description,
+            }
+          : null
+      }
+    />
+  </section>
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <SectionHeading
+        kicker="NEWS"
+        title="近期消息"
+        linkHref="/announcements"
+        linkLabel="所有消息"
+      />
+      {
+        latestNews.length > 0 ? (
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {latestNews.map((a) => (
+              <EventCard
+                title={a.data.title}
+                href={`/announcements/${slugOf(a.id)}`}
+                date={a.data.date}
+                category={a.data.category}
+                description={a.data.description}
+                image={a.data.image}
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="rounded-2xl bg-sand-50 p-8 text-center text-neutral-500 ring-1 ring-sand-200">
+            近期消息準備中，敬請期待。
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <section id="services" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="SERVICES" title="聚會時間" description="歡迎參加各項聚會，詳情請見最新消息或聯絡教會。" />
+    <ServiceTimeTable serviceTimes={site.serviceTimes} />
+  </section>
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <SectionHeading kicker="PASTORS" title="牧師團隊" linkHref="/about" linkLabel="關於我們" />
+      {
+        pastors.length > 0 ? (
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {pastors.map((p) => (
+              <PastorCard pastor={p} />
+            ))}
+          </div>
+        ) : (
+          <p class="rounded-2xl bg-sand-50 p-8 text-center text-neutral-500 ring-1 ring-sand-200">
+            牧師團隊介紹準備中，敬請期待。
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="GALLERY" title="活動剪影" linkHref="/media" linkLabel="影音專區" />
+    {
+      albums.length > 0 ? (
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {albums.map((a) => (
+            <AlbumCard
+              title={a.data.title}
+              href={`/media/gallery/${slugOf(a.id)}`}
+              date={a.data.date}
+              cover={a.data.cover ?? a.data.photos[0]}
+              photoCount={a.data.photos.length}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="rounded-2xl bg-white p-8 text-center text-neutral-500 shadow-md ring-1 ring-sand-200">
+          活動照片準備中，敬請期待。
+        </p>
+      )
+    }
+  </section>
+</Layout>

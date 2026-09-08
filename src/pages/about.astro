@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import PastorCard from '../components/PastorCard.astro';
+import { site } from '../data/site';
+
+const pastors = (await getCollection('pastors', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const beliefs = (await getCollection('beliefs', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const beliefContents = await Promise.all(
+  beliefs.map(async (b) => ({ entry: b, rendered: await render(b) })),
+);
+---
+
+<Layout title="關於我們" description={`認識${site.churchName}：教會簡介、信仰宣言與牧師團隊。`}>
+  <section class="bg-navy-900">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <p class="text-sm font-bold tracking-[0.2em] text-sand-300">ABOUT US</p>
+      <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">關於我們</h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="教會簡介" title={`歡迎來到${site.churchName}`} />
+    <div class="rich-text rounded-2xl bg-white p-6 shadow-md ring-1 ring-sand-200 sm:p-8">
+      <p>
+        {site.churchName}位於{site.address}。貴格會（公誼會）是一個重視簡樸、和平、正直的基督教傳統，
+        我們以心靈誠實敬拜上帝，在生活中實踐愛與關懷。
+      </p>
+      <p>
+        每週日早上 9:00 有主日禮拜（同步 YouTube
+        直播），另有兒童營、造就課程、長者聚樂部、禱告會與關懷小家等聚會，
+        誠摯邀請您闔家參加。
+      </p>
+      <p>
+        <a href="/contact">聯絡我們</a>・<a href="/#services">查看聚會時間</a>
+      </p>
+    </div>
+  </section>
+
+  {
+    beliefContents.length > 0 && (
+      <section class="bg-white">
+        <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
+          <SectionHeading kicker="信仰宣言" title="我們的信仰" />
+          <div class="space-y-6">
+            {beliefContents.map(({ entry, rendered }) => (
+              <article class="rounded-2xl bg-sand-50 p-6 ring-1 ring-sand-200 sm:p-8">
+                <h3 class="text-lg font-bold text-navy-900">{entry.data.title}</h3>
+                <div class="rich-text mt-3">
+                  <rendered.Content />
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class:list={['mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16', beliefContents.length > 0 ? '' : 'bg-white']}>
+    <SectionHeading kicker="牧師團隊" title="牧者與同工" />
+    {
+      pastors.length > 0 ? (
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {pastors.map((p) => (
+            <PastorCard pastor={p} showBio />
+          ))}
+        </div>
+      ) : (
+        <p class="rounded-2xl bg-white p-8 text-center text-neutral-500 shadow-md ring-1 ring-sand-200">
+          牧師團隊介紹準備中，敬請期待。
+        </p>
+      )
+    }
+  </section>
+</Layout>

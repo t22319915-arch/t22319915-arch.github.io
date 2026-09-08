@@ -1,0 +1,125 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import { formatDate } from '../../../utils/date';
+
+export async function getStaticPaths() {
+  const albums = await getCollection('galleryAlbums', ({ data }) => !data.draft);
+  return albums.map((album) => ({
+    params: { slug: album.id.replace(/\.md$/, '') },
+    props: { album },
+  }));
+}
+
+const { album } = Astro.props;
+const { Content } = await render(album);
+const photos = album.data.photos ?? [];
+const cover = album.data.cover ?? photos[0];
+---
+
+<Layout
+  title={album.data.title}
+  description={album.data.description ?? album.data.title}
+  image={cover}
+>
+  <article class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+    <a href="/media" class="inline-flex items-center gap-1 text-sm font-medium text-navy-700 hover:text-brick-700 hover:underline hover:underline-offset-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      返回影音專區
+    </a>
+
+    <div class="mt-4">
+      <time datetime={album.data.date.toISOString()} class="text-sm text-neutral-500">
+        {formatDate(album.data.date)}
+      </time>
+      <h1 class="mt-1 text-2xl font-black leading-snug text-navy-950 sm:text-3xl">
+        {album.data.title}
+      </h1>
+      {album.data.description && <p class="mt-2 leading-7 text-neutral-600">{album.data.description}</p>}
+    </div>
+
+    {
+      photos.length > 0 ? (
+        <div id="photo-grid" data-photos={JSON.stringify(photos)} class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+          {photos.map((src, i) => (
+            <button
+              type="button"
+              data-index={i}
+              class="photo-btn group overflow-hidden rounded-xl bg-sand-100 ring-1 ring-sand-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-600"
+              aria-label={`放大檢視第 ${i + 1} 張照片`}
+            >
+              <img
+                src={src}
+                alt={`${album.data.title}（${i + 1}）`}
+                loading="lazy"
+                decoding="async"
+                class="aspect-square h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p class="mt-8 rounded-2xl bg-white p-8 text-center text-neutral-500 shadow-md ring-1 ring-sand-200">
+          本相簿尚無照片。
+        </p>
+      )
+    }
+
+    <div class="rich-text mt-8">
+      <Content />
+    </div>
+  </article>
+
+  <dialog
+    id="lightbox"
+    class="max-h-[90vh] w-[min(90vw,64rem)] rounded-2xl bg-navy-950 p-2 backdrop:bg-black/80 sm:p-3"
+    aria-label="照片檢視器"
+  >
+    <div class="relative">
+      <img id="lightbox-img" src="" alt="" class="max-h-[76vh] w-full rounded-xl object-contain" />
+      <div class="mt-2 flex items-center justify-between gap-2 px-1 pb-1">
+        <p id="lightbox-count" class="text-sm text-white/80" aria-live="polite" />
+        <div class="flex gap-2">
+          <button id="lightbox-prev" type="button" class="rounded-lg bg-white/10 px-4 py-2 text-sm font-bold text-white hover:bg-white/20">上一張</button>
+          <button id="lightbox-next" type="button" class="rounded-lg bg-white/10 px-4 py-2 text-sm font-bold text-white hover:bg-white/20">下一張</button>
+          <button id="lightbox-close" type="button" class="rounded-lg bg-brick-600 px-4 py-2 text-sm font-bold text-white hover:bg-brick-500">關閉</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</Layout>
+
+<script>
+  const grid = document.getElementById('photo-grid');
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+  const img = document.getElementById('lightbox-img') as HTMLImageElement | null;
+  const count = document.getElementById('lightbox-count');
+  const photos: string[] = grid ? JSON.parse(grid.dataset.photos ?? '[]') : [];
+  let index = 0;
+
+  function show(i: number) {
+    if (!dialog || !img || photos.length === 0) return;
+    index = (i + photos.length) % photos.length;
+    img.src = photos[index];
+    img.alt = `第 ${index + 1} 張照片`;
+    if (count) count.textContent = `${index + 1} / ${photos.length}`;
+    if (!dialog.open) dialog.showModal();
+  }
+
+  grid?.querySelectorAll<HTMLButtonElement>('.photo-btn').forEach((btn) => {
+    btn.addEventListener('click', () => show(Number(btn.dataset.index ?? 0)));
+  });
+  document.getElementById('lightbox-prev')?.addEventListener('click', () => show(index - 1));
+  document.getElementById('lightbox-next')?.addEventListener('click', () => show(index + 1));
+  document.getElementById('lightbox-close')?.addEventListener('click', () => dialog?.close());
+  dialog?.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!dialog?.open) return;
+    if (e.key === 'ArrowLeft') show(index - 1);
+    if (e.key === 'ArrowRight') show(index + 1);
+  });
+</script>

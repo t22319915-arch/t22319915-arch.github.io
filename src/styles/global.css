@@ -1,0 +1,95 @@
+@import "@fontsource-variable/noto-sans-tc";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans TC Variable", "Noto Sans TC", "PingFang TC",
+    "Hiragino Sans CNS", "Microsoft JhengHei", system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+
+  /* 品牌色：取自教會 Logo —— 深海軍藍（主色） */
+  --color-navy-50: #eef1f6;
+  --color-navy-100: #d9e0ed;
+  --color-navy-200: #b3c2da;
+  --color-navy-300: #8499c2;
+  --color-navy-400: #576ea5;
+  --color-navy-500: #3c5186;
+  --color-navy-600: #2f406c;
+  --color-navy-700: #2a3759;
+  --color-navy-800: #252f4b;
+  --color-navy-900: #202741;
+  --color-navy-950: #141a2e;
+
+  /* 品牌色：取自教會 Logo —— 磚紅（強調色） */
+  --color-brick-50: #fbf2f1;
+  --color-brick-100: #f6deda;
+  --color-brick-200: #ecbab2;
+  --color-brick-300: #de8d82;
+  --color-brick-400: #cd5d52;
+  --color-brick-500: #bc443a;
+  --color-brick-600: #a2342e;
+  --color-brick-700: #872b27;
+  --color-brick-800: #702725;
+  --color-brick-900: #5c2322;
+  --color-brick-950: #331011;
+
+  /* 品牌色：取自教會 Logo —— 米白（背景） */
+  --color-sand-50: #fdfbf5;
+  --color-sand-100: #f8f2e4;
+  --color-sand-200: #f0e3c8;
+  --color-sand-300: #e4cfa3;
+  --color-sand-400: #d7b678;
+  --color-sand-500: #cda257;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-sand-50 font-sans text-neutral-800 antialiased;
+}
+
+::selection {
+  @apply bg-navy-600 text-white;
+}
+
+/* 錨點跳轉時避開固定式 Header */
+section[id],
+article[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* 來自 CMS 的 Markdown 內文排版 */
+.rich-text {
+  @apply leading-8 text-neutral-700;
+}
+.rich-text > * + * {
+  @apply mt-4;
+}
+.rich-text h2 {
+  @apply mt-8 text-xl font-bold text-navy-800;
+}
+.rich-text h3 {
+  @apply mt-6 text-lg font-bold text-navy-800;
+}
+.rich-text p {
+  @apply leading-8;
+}
+.rich-text a {
+  @apply font-medium text-brick-600 underline decoration-brick-300 underline-offset-4 hover:text-brick-700;
+}
+.rich-text ul {
+  @apply list-disc space-y-2 pl-6;
+}
+.rich-text ol {
+  @apply list-decimal space-y-2 pl-6;
+}
+.rich-text blockquote {
+  @apply border-l-4 border-sand-300 bg-sand-100 px-4 py-3 text-neutral-600;
+}
+.rich-text img {
+  @apply mx-auto rounded-xl shadow-md;
+}
+.rich-text hr {
+  @apply border-sand-200;
+}

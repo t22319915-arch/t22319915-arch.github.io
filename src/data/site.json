@@ -1,0 +1,19 @@
+{
+  "churchName": "台中北屯貴格會",
+  "tagline": "歡迎來到台中北屯貴格會",
+  "address": "台中市北屯區衛道路112號",
+  "phone": "04-22319915",
+  "email": "tcfc.tw@gmail.com",
+  "facebookUrl": "https://www.facebook.com/tcfcTAIWAN",
+  "youtubeChannelUrl": "",
+  "mapEmbedUrl": "https://www.google.com/maps?q=台中市北屯區衛道路112號&output=embed",
+  "serviceTimes": [
+    { "name": "主日禮拜", "time": "禮拜日 09:00", "location": "禮拜堂", "note": "" },
+    { "name": "假日兒童營", "time": "禮拜日 09:00", "location": "活動中心", "note": "" },
+    { "name": "造就課程", "time": "禮拜日 10:30", "location": "活動中心", "note": "" },
+    { "name": "長者聚樂部", "time": "週三、四 09:00", "location": "活動中心", "note": "" },
+    { "name": "禱告會", "time": "週四 19:30", "location": "活動中心", "note": "" },
+    { "name": "關懷小家", "time": "時間及地點各家決定", "location": "", "note": "" },
+    { "name": "聖工委員會", "time": "每月第一主日 12:00", "location": "", "note": "" }
+  ]
+}

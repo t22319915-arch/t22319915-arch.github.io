@@ -1,0 +1,143 @@
+# Decap CMS 設定檔（繁體中文介面）
+# 文件：https://decapcms.org/docs/configuration-options/
+backend:
+  name: github
+  repo: t22319915-arch/t22319915-arch.github.io
+  branch: main
+  # OAuth 授權代理（Cloudflare Workers，Phase 6 部署後填入正式網址）
+  base_url: https://church-cms-auth.workers.dev
+  auth_endpoint: /auth
+
+# 後台介面語言：繁體中文
+locale: zh_Hant
+
+# 上傳圖片存放位置（網站 public/uploads，對外網址 /uploads/...）
+media_folder: public/uploads
+public_folder: /uploads
+
+# 發布流程：直接發布（不需審核，適合單人維護）
+publish_mode: simple
+
+collections:
+  # ─── 網站基本設定（單一檔案） ───
+  - name: siteSettings
+    label: 網站基本設定
+    files:
+      - label: 基本資料
+        name: settings
+        file: src/data/site.json
+        fields:
+          - { label: 教會名稱, name: churchName, widget: string }
+          - { label: 歡迎標語（首頁大標下小字）, name: tagline, widget: string, required: false }
+          - { label: 地址, name: address, widget: string }
+          - { label: 電話, name: phone, widget: string }
+          - { label: Email, name: email, widget: string }
+          - { label: Facebook 專頁網址, name: facebookUrl, widget: string, required: false }
+          - { label: YouTube 頻道網址, name: youtubeChannelUrl, widget: string, required: false }
+          - { label: Google 地圖嵌入網址, name: mapEmbedUrl, widget: text, required: false }
+          - label: 聚會時間表
+            name: serviceTimes
+            widget: list
+            summary: "{{fields.name}}｜{{fields.time}}"
+            fields:
+              - { label: 聚會名稱, name: name, widget: string }
+              - { label: 時間, name: time, widget: string }
+              - { label: 地點, name: location, widget: string, required: false }
+              - { label: 備註, name: note, widget: string, required: false }
+
+  # ─── 本週直播連結 ───
+  - name: liveStream
+    label: 主日直播連結
+    label_singular: 直播
+    folder: src/content/liveStream
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}"
+    summary: "{{title}}（{{date | date('YYYY/MM/DD')}}）"
+    fields:
+      - { label: 標題（例：2026.09.06 主日禮拜）, name: title, widget: string }
+      - { label: 日期, name: date, widget: datetime, format: YYYY-MM-DD }
+      - { label: YouTube 連結, name: youtubeUrl, widget: string, hint: 貼上 YouTube 影片或直播網址 }
+      - { label: 說明, name: description, widget: text, required: false }
+      - { label: 設為本週直播（首頁顯示）, name: isCurrentWeek, widget: boolean, default: false, hint: 一次只保留一筆勾選，舊的請取消勾選 }
+      - { label: 備註內文, name: body, widget: markdown, required: false }
+
+  # ─── 最新消息 / 活動 ───
+  - name: announcements
+    label: 最新消息與活動
+    label_singular: 消息
+    folder: src/content/announcements
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: 標題, name: title, widget: string }
+      - { label: 日期, name: date, widget: datetime, format: YYYY-MM-DD }
+      - label: 分類
+        name: category
+        widget: select
+        options:
+          - { label: 公告事項, value: announcement }
+          - { label: 活動訊息, value: event }
+        default: announcement
+      - { label: 摘要（一句話，顯示在列表）, name: description, widget: text, required: false }
+      - { label: 封面圖片, name: image, widget: image, required: false }
+      - { label: 置頂（顯示在首頁公告欄）, name: pinned, widget: boolean, default: false }
+      - { label: 草稿（不公開）, name: draft, widget: boolean, default: false }
+      - { label: 內文, name: body, widget: markdown }
+
+  # ─── 牧師 / 同工 ───
+  - name: pastors
+    label: 牧師與同工
+    label_singular: 同工
+    folder: src/content/pastors
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{name}}｜{{title}}"
+    fields:
+      - { label: 姓名, name: name, widget: string }
+      - { label: 職銜（例：主任牧師）, name: title, widget: string }
+      - { label: 照片, name: photo, widget: image, required: false }
+      - { label: 排序（數字小排前面）, name: order, widget: number, default: 1, value_type: int }
+      - { label: 不公開, name: draft, widget: boolean, default: false }
+      - { label: 簡介, name: body, widget: markdown }
+
+  # ─── 活動相簿（依日期排序） ───
+  - name: galleryAlbums
+    label: 活動相簿
+    label_singular: 相簿
+    folder: src/content/gallery
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: 相簿標題（例：2026.09.06 郊外禮拜）, name: title, widget: string }
+      - { label: 活動日期（相簿依此排序）, name: date, widget: datetime, format: YYYY-MM-DD }
+      - { label: 封面圖片, name: cover, widget: image, required: false }
+      - { label: 說明, name: description, widget: text, required: false }
+      - { label: 照片（可多選上傳）, name: photos, widget: list, field: { label: 照片, name: photo, widget: image } }
+      - { label: 不公開, name: draft, widget: boolean, default: false }
+      - { label: 備註內文, name: body, widget: markdown, required: false }
+
+  # ─── 信仰宣言 ───
+  - name: beliefs
+    label: 信仰宣言
+    label_singular: 條文
+    folder: src/content/beliefs
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: 標題, name: title, widget: string }
+      - { label: 排序（數字小排前面）, name: order, widget: number, default: 1, value_type: int }
+      - { label: 不公開, name: draft, widget: boolean, default: false }
+      - { label: 內文, name: body, widget: markdown }

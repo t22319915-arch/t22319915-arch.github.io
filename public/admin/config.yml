@@ -4,8 +4,8 @@ backend:
   name: github
   repo: t22319915-arch/t22319915-arch.github.io
   branch: main
-  # OAuth 授權代理（Cloudflare Workers，Phase 6 部署後填入正式網址）
-  base_url: https://church-cms-auth.workers.dev
+  # OAuth 授權代理（Cloudflare Workers）
+  base_url: https://church-cms-auth.t22319915.workers.dev
   auth_endpoint: /auth
 
 # 後台介面語言：繁體中文

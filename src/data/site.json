@@ -13,7 +13,7 @@
     { "name": "造就課程", "time": "禮拜日 10:30", "location": "活動中心", "note": "" },
     { "name": "長者聚樂部", "time": "週三、四 09:00", "location": "活動中心", "note": "" },
     { "name": "禱告會", "time": "週四 19:30", "location": "活動中心", "note": "" },
-    { "name": "關懷小家", "time": "時間及地點各家決定", "location": "", "note": "" },
+    { "name": "關懷小家", "time": "時間及地點各家決定", "location": "", "note": "請洽各小家負責人" },
     { "name": "聖工委員會", "time": "每月第一主日 12:00", "location": "", "note": "" }
   ]
 }

@@ -17,9 +17,12 @@ const { serviceTimes } = Astro.props;
           <p class="text-neutral-700">
             {s.time}
             {s.location && <span class="text-neutral-500">・{s.location}</span>}
-            {s.note && <span class="block text-sm text-neutral-500">{s.note}</span>}
           </p>
-          <span class="hidden text-sm text-neutral-400 sm:block">每週固定聚會</span>
+          {s.note ? (
+            <span class="text-sm text-brick-600">{s.note}</span>
+          ) : (
+            <span class="hidden sm:block" />
+          )}
         </li>
       ))
     }

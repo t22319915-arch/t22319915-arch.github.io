@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { site } from '../data/site';
+---
+
+<Layout title="奉獻支持" description={`支持${site.churchName}的事工：奉獻轉帳資訊。`}>
+  <section class="bg-navy-900">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <p class="text-sm font-bold tracking-[0.2em] text-sand-300">GIVING</p>
+      <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">奉獻支持</h1>
+      <p class="mt-3 max-w-3xl leading-8 text-navy-100">
+        「你們要將當納的十分之一全然送入倉庫，使我家有糧。」（瑪拉基書 3:10）感謝每一位以禱告與奉獻擺上的弟兄姊妹，願神親自紀念。
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="ACCOUNT" title="轉帳資訊" />
+    <div class="rounded-2xl bg-white p-6 shadow-md ring-1 ring-sand-200 sm:p-8">
+      <dl class="divide-y divide-sand-200">
+        <div class="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <dt class="text-sm font-bold text-neutral-500">銀行</dt>
+          <dd class="text-lg font-bold text-navy-900">{site.givingBank}</dd>
+        </div>
+        <div class="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <dt class="text-sm font-bold text-neutral-500">帳號</dt>
+          <dd id="giving-account" class="text-lg font-bold tracking-wide text-navy-900">{site.givingAccount}</dd>
+        </div>
+        <div class="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <dt class="text-sm font-bold text-neutral-500">戶名</dt>
+          <dd class="text-lg font-bold text-navy-900">{site.givingAccountName}</dd>
+        </div>
+      </dl>
+      <button
+        id="copy-account"
+        type="button"
+        class="mt-2 inline-flex items-center gap-2 rounded-xl bg-navy-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-navy-600"
+      >
+        複製帳號
+      </button>
+      <p id="copy-hint" class="mt-2 hidden text-sm font-bold text-brick-600" aria-live="polite">已複製帳號</p>
+      {
+        site.givingNote?.trim() && (
+          <p class="mt-4 whitespace-pre-line rounded-xl bg-sand-50 p-4 text-sm leading-7 text-neutral-600 ring-1 ring-sand-200">
+            {site.givingNote}
+          </p>
+        )
+      }
+    </div>
+
+    <div class="mt-6 rounded-2xl bg-brick-50 p-6 ring-1 ring-brick-100">
+      <h2 class="font-bold text-brick-700">給新朋友的話</h2>
+      <p class="mt-2 leading-7 text-neutral-600">
+        第一次來的朋友不需要奉獻，只要放心領受。奉獻是基督徒對上帝愛的回應，歡迎你先認識這位愛你的神。
+      </p>
+      <p class="mt-3 leading-7 text-neutral-600">
+        轉帳後若方便，請透過電話（{site.phone}）或主日告知同工，以利對帳與開立收據，謝謝。
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const btn = document.getElementById('copy-account');
+  const target = document.getElementById('giving-account');
+  const hint = document.getElementById('copy-hint');
+  btn?.addEventListener('click', async () => {
+    const text = (target?.textContent ?? '').trim().replace(/[^0-9-]/g, '');
+    try {
+      await navigator.clipboard.writeText(text);
+      hint?.classList.remove('hidden');
+    } catch {
+      window.prompt('請手動複製帳號：', text);
+    }
+  });
+</script>

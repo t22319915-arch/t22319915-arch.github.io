@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { site } from '../data/site';
+
+const faqs = [
+  {
+    q: '幾點到教會比較好？',
+    a: '主日禮拜早上 9:00 開始，建議提早 15 分鐘到，現場有招待同工帶位、介紹環境。',
+  },
+  {
+    q: '要穿什麼、帶什麼？',
+    a: '輕便整齊即可，不用特別打扮；不用帶聖經，現場備有聖經與週報。帶著輕鬆的心來就好。',
+  },
+  {
+    q: '聚會大概多久？',
+    a: '約 1.5 小時，包含敬拜、信息分享與祝福禱告。結束後歡迎留下來喝杯茶、認識新朋友。',
+  },
+  {
+    q: '小朋友怎麼辦？',
+    a: '4–12 歲兒童有「假日兒童營」（同時間早上 9:00），有老師帶領照顧，大人可安心聚會。',
+  },
+  {
+    q: '第一次來需要奉獻嗎？',
+    a: '不需要。奉獻是基督徒對上帝的敬拜回應，新朋友只要放心領受，完全沒有壓力。',
+  },
+  {
+    q: '想更認識教會怎麼辦？',
+    a: `填寫下方表單留下聯繫方式，會有專人（電話 ${site.phone}）與你聯繫；也可以主日直接找招待同工聊聊。資料僅作教會聯繫使用，不會外流。`,
+  },
+];
+
+/** Google 表單分享連結轉為可嵌入網址 */
+function toEmbedUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    u.searchParams.set('embedded', 'true');
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+const formUrl = site.newcomerFormUrl?.trim();
+const telHref = `tel:${site.phone.replace(/[^+\d]/g, '')}`;
+---
+
+<Layout title="第一次來" description={`第一次來${site.churchName}？聚會時間、交通方式與常見問題一次看懂。`}>
+  <section class="bg-navy-900">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <p class="text-sm font-bold tracking-[0.2em] text-sand-300">WELCOME</p>
+      <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">第一次來</h1>
+      <p class="mt-3 text-navy-100">歡迎你！這裡回答新朋友最常問的問題，讓你安心踏出第一步。</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#faq" class="inline-flex items-center gap-2 rounded-xl bg-brick-600 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brick-500">
+          常見問題
+        </a>
+        <a href="#traffic" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/20">
+          交通方式
+        </a>
+        <a href="#form" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/20">
+          留下資料
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="FAQ" title="新朋友常見問題" />
+    <div class="grid gap-5 md:grid-cols-2">
+      {
+        faqs.map((item) => (
+          <div class="rounded-2xl bg-white p-6 shadow-md ring-1 ring-sand-200">
+            <h2 class="font-bold text-navy-900">{item.q}</h2>
+            <p class="mt-2 leading-7 text-neutral-600">{item.a}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section id="traffic" class="scroll-mt-20 bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <SectionHeading kicker="TRAFFIC" title="交通方式" description={site.address} />
+      {
+        (site.transportBus?.trim() || site.transportParking?.trim()) && (
+          <div class="mb-6 grid gap-5 md:grid-cols-2">
+            {site.transportBus?.trim() && (
+              <div class="rounded-2xl bg-sand-50 p-6 ring-1 ring-sand-200">
+                <h2 class="font-bold text-navy-900">大眾運輸</h2>
+                <p class="mt-2 whitespace-pre-line leading-7 text-neutral-600">{site.transportBus}</p>
+              </div>
+            )}
+            {site.transportParking?.trim() && (
+              <div class="rounded-2xl bg-sand-50 p-6 ring-1 ring-sand-200">
+                <h2 class="font-bold text-navy-900">開車停車</h2>
+                <p class="mt-2 whitespace-pre-line leading-7 text-neutral-600">{site.transportParking}</p>
+              </div>
+            )}
+          </div>
+        )
+      }
+      <div class="overflow-hidden rounded-2xl shadow-md ring-1 ring-sand-200">
+        <iframe
+          src={site.mapEmbedUrl}
+          title={`${site.churchName}地圖`}
+          class="h-[380px] w-full border-0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        />
+      </div>
+    </div>
+  </section>
+
+  <section id="form" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 sm:py-16">
+    <SectionHeading kicker="CONTACT" title="留下資料" description="填寫後將有專人與你聯繫，資料僅作教會聯繫使用。" />
+    {
+      formUrl ? (
+        <div class="overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-sand-200">
+          <iframe
+            src={toEmbedUrl(formUrl)}
+            title="新朋友留資料表單"
+            class="h-[900px] w-full border-0"
+            loading="lazy"
+          >
+            載入中…
+          </iframe>
+        </div>
+      ) : (
+        <div class="rounded-2xl bg-white p-8 text-center shadow-md ring-1 ring-sand-200 sm:p-12">
+          <p class="text-lg font-bold text-navy-800">線上表單準備中</p>
+          <p class="mt-2 text-neutral-500">歡迎直接來電，或主日到現場找招待同工，我們很樂意認識你。</p>
+          <a
+            href={telHref}
+            class="mt-4 inline-flex items-center gap-2 rounded-xl bg-navy-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-navy-600"
+          >
+            撥打 {site.phone}
+          </a>
+        </div>
+      )
+    }
+  </section>
+</Layout>

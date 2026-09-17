@@ -35,6 +35,13 @@ collections:
           - { label: Facebook 專頁網址, name: facebookUrl, widget: string, required: false }
           - { label: YouTube 頻道網址, name: youtubeChannelUrl, widget: string, required: false }
           - { label: Google 地圖嵌入網址, name: mapEmbedUrl, widget: text, required: false }
+          - { label: 新人表單連結（Google 表單網址，空白則只顯示電話）, name: newcomerFormUrl, widget: string, required: false }
+          - { label: 交通資訊：大眾運輸, name: transportBus, widget: text, required: false }
+          - { label: 交通資訊：開車停車, name: transportParking, widget: text, required: false }
+          - { label: 奉獻銀行, name: givingBank, widget: string }
+          - { label: 奉獻帳號, name: givingAccount, widget: string }
+          - { label: 奉獻戶名, name: givingAccountName, widget: string }
+          - { label: 奉獻備註, name: givingNote, widget: text, required: false }
           - label: 聚會時間表
             name: serviceTimes
             widget: list
@@ -96,6 +103,27 @@ collections:
       - { label: 置頂（顯示在首頁公告欄）, name: pinned, widget: boolean, default: false }
       - { label: 草稿（不公開）, name: draft, widget: boolean, default: false }
       - { label: 內文, name: body, widget: markdown }
+
+  # ─── 主日週報（PDF 上傳） ───
+  - name: bulletins
+    label: 主日週報
+    label_singular: 週報
+    folder: src/content/bulletins
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}"
+    summary: "{{title}}"
+    fields:
+      - { label: 標題（例：2502期 2026.09.13）, name: title, widget: string }
+      - { label: 日期, name: date, widget: datetime, format: YYYY-MM-DD }
+      - label: 週報 PDF
+        name: pdf
+        widget: file
+        media_folder: public/uploads/bulletins
+        public_folder: /uploads/bulletins
+        hint: 上傳該週週報 PDF
+      - { label: 不公開, name: draft, widget: boolean, default: false }
 
   # ─── 牧師 / 同工 ───
   - name: pastors

@@ -11,6 +11,7 @@ import PastorCard from '../components/PastorCard.astro';
 import AlbumCard from '../components/AlbumCard.astro';
 import { site } from '../data/site';
 import { getCurrentStream } from '../utils/liveStream';
+import { formatDate } from '../utils/date';
 
 const slugOf = (id: string) => id.replace(/\.md$/, '');
 const byDateDesc = (a: { data: { date: Date } }, b: { data: { date: Date } }) =>
@@ -31,6 +32,10 @@ const pastors = (await getCollection('pastors', ({ data }) => !data.draft))
 const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft))
   .sort(byDateDesc)
   .slice(0, 3);
+
+const latestBulletin = (
+  await getCollection('bulletins', ({ data }) => !data.draft)
+).sort(byDateDesc)[0];
 ---
 
 <Layout title="首頁">
@@ -94,6 +99,51 @@ const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft))
           <p class="rounded-2xl bg-sand-50 p-8 text-center text-neutral-500 ring-1 ring-sand-200">
             近期消息準備中，敬請期待。
           </p>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="border-y border-sand-200 bg-sand-50">
+    <div class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-4 py-8 sm:flex-row sm:items-center sm:px-6">
+      <div>
+        <p class="text-sm font-bold tracking-[0.2em] text-brick-600">BULLETIN</p>
+        {
+          latestBulletin ? (
+            <p class="mt-1 text-lg font-bold text-navy-900">
+              最新週報：{latestBulletin.data.title}
+              <span class="ml-2 text-sm font-medium text-neutral-500">{formatDate(latestBulletin.data.date)}</span>
+            </p>
+          ) : (
+            <p class="mt-1 text-lg font-bold text-navy-900">主日週報</p>
+          )
+        }
+      </div>
+      {
+        latestBulletin ? (
+          <div class="flex flex-wrap gap-3">
+            <a
+              href={latestBulletin.data.pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl bg-navy-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-navy-600"
+            >
+              閱讀本週週報
+            </a>
+            <a
+              href="/bulletins"
+              class="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-navy-700 ring-1 ring-navy-200 transition-colors hover:bg-sand-100"
+            >
+              過往週報
+            </a>
+          </div>
+        ) : (
+          <a
+            href="/bulletins"
+            class="inline-flex items-center gap-2 rounded-xl bg-navy-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-navy-600"
+          >
+            前往週報專區
+          </a>
         )
       }
     </div>

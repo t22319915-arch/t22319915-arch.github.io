@@ -7,6 +7,13 @@
   "facebookUrl": "https://www.facebook.com/tcfcTAIWAN",
   "youtubeChannelUrl": "https://www.youtube.com/@北屯貴格會直播",
   "mapEmbedUrl": "https://www.google.com/maps?q=台中市北屯區衛道路112號&output=embed",
+  "newcomerFormUrl": "",
+  "transportBus": "",
+  "transportParking": "",
+  "givingBank": "中華郵局",
+  "givingAccount": "700-0021351-0071231",
+  "givingAccountName": "財團法人台北市基督教台灣貴格會北屯教會",
+  "givingNote": "",
   "serviceTimes": [
     { "name": "主日禮拜", "time": "禮拜日 09:00", "location": "禮拜堂", "note": "" },
     { "name": "假日兒童營", "time": "禮拜日 09:00", "location": "活動中心", "note": "" },

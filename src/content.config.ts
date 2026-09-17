@@ -53,6 +53,17 @@ const galleryAlbums = defineCollection({
   }),
 });
 
+/** 主日週報（PDF 下載） */
+const bulletins = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/bulletins' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    pdf: z.string(),
+    draft: z.boolean().default(false),
+  }),
+});
+
 /** 信仰宣言（多段落、可排序） */
 const beliefs = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/beliefs' }),
@@ -66,6 +77,7 @@ const beliefs = defineCollection({
 export const collections = {
   announcements,
   liveStream,
+  bulletins,
   pastors,
   galleryAlbums,
   beliefs,

@@ -16,6 +16,13 @@ export interface SiteData {
   facebookUrl: string;
   youtubeChannelUrl: string;
   mapEmbedUrl: string;
+  newcomerFormUrl: string;
+  transportBus: string;
+  transportParking: string;
+  givingBank: string;
+  givingAccount: string;
+  givingAccountName: string;
+  givingNote: string;
   serviceTimes: ServiceTime[];
 }
 

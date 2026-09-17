@@ -64,7 +64,7 @@ collections:
         hint: 日期與時間都可調整（時間例如 09:00）
       - { label: YouTube 連結, name: youtubeUrl, widget: string, hint: 貼上 YouTube 影片或直播網址 }
       - { label: 說明, name: description, widget: text, required: false }
-      - { label: 設為本週直播（首頁顯示）, name: isCurrentWeek, widget: boolean, default: false, hint: 一次只保留一筆勾選，舊的請取消勾選 }
+      - { label: 設為本週直播（首頁顯示）, name: isCurrentWeek, widget: boolean, default: false, hint: 7天內有效、過期自動卸下；一般不用勾，系統自動抓最新（同週多筆才需指定） }
       - { label: 備註內文, name: body, widget: markdown, required: false }
 
   # ─── 最新消息 / 活動 ───

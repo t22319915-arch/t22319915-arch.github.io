@@ -10,6 +10,7 @@ import EventCard from '../components/EventCard.astro';
 import PastorCard from '../components/PastorCard.astro';
 import AlbumCard from '../components/AlbumCard.astro';
 import { site } from '../data/site';
+import { getCurrentStream } from '../utils/liveStream';
 
 const slugOf = (id: string) => id.replace(/\.md$/, '');
 const byDateDesc = (a: { data: { date: Date } }, b: { data: { date: Date } }) =>
@@ -20,7 +21,8 @@ const pinned = allNews.filter((a) => a.data.pinned).slice(0, 3);
 const latestNews = allNews.slice(0, 6);
 
 const streams = (await getCollection('liveStream')).sort(byDateDesc);
-const current = streams.find((s) => s.data.isCurrentWeek) ?? streams[0] ?? null;
+// 7 天自動判斷：勾選只在 7 天內有效，過期自動換最新（見 src/utils/liveStream.ts）
+const { stream: current, isCurrent: isCurrentLive } = getCurrentStream(streams);
 
 const pastors = (await getCollection('pastors', ({ data }) => !data.draft))
   .sort((a, b) => a.data.order - b.data.order)
@@ -46,12 +48,13 @@ const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft))
   <section id="live" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-12 sm:px-6 sm:py-16">
     <SectionHeading
       kicker="LIVE"
-      title="本週主日直播"
+      title={isCurrentLive || !current ? '本週主日直播' : '近期直播'}
       description="每週日早上 9:00 主日禮拜同步直播，歡迎線上一起敬拜。"
       linkHref="/media"
       linkLabel="更多影音"
     />
     <LiveStreamCard
+      isCurrent={isCurrentLive}
       stream={
         current
           ? {

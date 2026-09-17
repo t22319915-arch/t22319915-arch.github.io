@@ -12,9 +12,11 @@ export interface LiveStreamData {
 interface Props {
   stream?: LiveStreamData | null;
   compact?: boolean;
+  /** false＝過期後頂替的存檔，徽章改顯示「近期存檔」且不閃爍 */
+  isCurrent?: boolean;
 }
 
-const { stream = null, compact = false } = Astro.props;
+const { stream = null, compact = false, isCurrent = true } = Astro.props;
 const embedUrl = stream ? toEmbedUrl(stream.youtubeUrl) : null;
 const watchUrl = stream ? toWatchUrl(stream.youtubeUrl) : null;
 ---
@@ -37,11 +39,13 @@ const watchUrl = stream ? toWatchUrl(stream.youtubeUrl) : null;
         <div class="p-5 sm:p-6">
           <div class="flex flex-wrap items-center gap-3">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-brick-600 px-3 py-1 text-xs font-bold text-white">
-              <span class="relative flex h-2 w-2">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
-                <span class="relative inline-flex h-2 w-2 rounded-full bg-white" />
-              </span>
-              本週直播
+              {isCurrent && (
+                <span class="relative flex h-2 w-2">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+                  <span class="relative inline-flex h-2 w-2 rounded-full bg-white" />
+                </span>
+              )}
+              {isCurrent ? '本週直播' : '近期存檔'}
             </span>
             <time datetime={stream.date.toISOString()} class="text-sm text-neutral-500">
               {formatDateTimeSmart(stream.date)}

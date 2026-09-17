@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # 每天台灣時間 01:00 自動重建，讓「本週直播」滿 7 天後自動卸下（靜態站只在重建時重新計算）
+    - cron: '0 17 * * *'
 
 permissions:
   contents: read

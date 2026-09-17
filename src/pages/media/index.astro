@@ -7,10 +7,12 @@ import AlbumCard from '../../components/AlbumCard.astro';
 import { toThumbnailUrl } from '../../utils/youtube';
 import { formatDateTimeSmart } from '../../utils/date';
 import { site } from '../../data/site';
+import { getCurrentStream } from '../../utils/liveStream';
 
 const slugOf = (id: string) => id.replace(/\.md$/, '');
 const streams = (await getCollection('liveStream')).sort((a, b) => +b.data.date - +a.data.date);
-const current = streams.find((s) => s.data.isCurrentWeek) ?? streams[0] ?? null;
+// 7 天自動判斷：勾選只在 7 天內有效，過期自動換最新（見 src/utils/liveStream.ts）
+const { stream: current, isCurrent: isCurrentLive } = getCurrentStream(streams);
 const history = streams.filter((s) => s !== current);
 const years = [...new Set(history.map((s) => s.data.date.getFullYear()))].sort((a, b) => b - a);
 const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft)).sort(
@@ -28,8 +30,9 @@ const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft))
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-    <SectionHeading kicker="LIVE" title="主日直播" />
+    <SectionHeading kicker="LIVE" title={isCurrentLive || !current ? '主日直播' : '近期直播存檔'} />
     <LiveStreamCard
+      isCurrent={isCurrentLive}
       stream={
         current
           ? {

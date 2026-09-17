@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
-import { formatDate } from '../../../utils/date';
+import { formatDateTimeSmart } from '../../../utils/date';
 
 export async function getStaticPaths() {
   const albums = await getCollection('galleryAlbums', ({ data }) => !data.draft);
@@ -32,7 +32,7 @@ const cover = album.data.cover ?? photos[0];
 
     <div class="mt-4">
       <time datetime={album.data.date.toISOString()} class="text-sm text-neutral-500">
-        {formatDate(album.data.date)}
+        {formatDateTimeSmart(album.data.date)}
       </time>
       <h1 class="mt-1 text-2xl font-black leading-snug text-navy-950 sm:text-3xl">
         {album.data.title}

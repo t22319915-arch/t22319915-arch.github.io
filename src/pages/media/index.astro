@@ -4,14 +4,15 @@ import Layout from '../../layouts/Layout.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import LiveStreamCard from '../../components/LiveStreamCard.astro';
 import AlbumCard from '../../components/AlbumCard.astro';
-import { toThumbnailUrl, toWatchUrl } from '../../utils/youtube';
-import { formatDate } from '../../utils/date';
+import { toThumbnailUrl } from '../../utils/youtube';
+import { formatDateTimeSmart } from '../../utils/date';
 import { site } from '../../data/site';
 
 const slugOf = (id: string) => id.replace(/\.md$/, '');
 const streams = (await getCollection('liveStream')).sort((a, b) => +b.data.date - +a.data.date);
 const current = streams.find((s) => s.data.isCurrentWeek) ?? streams[0] ?? null;
 const history = streams.filter((s) => s !== current);
+const years = [...new Set(history.map((s) => s.data.date.getFullYear()))].sort((a, b) => b - a);
 const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft)).sort(
   (a, b) => +b.data.date - +a.data.date,
 );
@@ -46,16 +47,31 @@ const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft))
     history.length > 0 && (
       <section class="bg-white">
         <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-          <SectionHeading kicker="ARCHIVE" title="過往直播" description="點擊縮圖前往 YouTube 觀看完整影片。" />
-          <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <SectionHeading kicker="ARCHIVE" title="過往直播" description="點擊卡片進入詳細頁觀看嵌入影片。" />
+          {years.length > 1 && (
+            <form id="year-filter-form" class="mb-6 flex items-center gap-3" onsubmit="return false;">
+              <label for="year-filter" class="text-sm font-bold text-navy-800">年份篩選</label>
+              <select
+                id="year-filter"
+                name="year"
+                class="rounded-xl border border-sand-300 bg-sand-50 px-4 py-2 text-sm font-medium text-navy-900 outline-none focus:border-navy-500"
+              >
+                <option value="all">全部年份</option>
+                {years.map((y) => (
+                  <option value={String(y)}>{y} 年</option>
+                ))}
+              </select>
+              <span id="year-count" class="text-sm text-neutral-500" aria-live="polite" />
+            </form>
+          )}
+          <ul id="archive-list" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {history.map((s) => {
               const thumb = toThumbnailUrl(s.data.youtubeUrl);
+              const year = s.data.date.getFullYear();
               return (
-                <li>
+                <li data-year={year}>
                   <a
-                    href={toWatchUrl(s.data.youtubeUrl)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`/media/live/${slugOf(s.id)}`}
                     class="group flex gap-4 rounded-2xl bg-sand-50 p-3 ring-1 ring-sand-200 transition-shadow hover:shadow-md"
                   >
                     <div class="relative h-20 w-32 shrink-0 overflow-hidden rounded-xl bg-navy-900">
@@ -73,7 +89,7 @@ const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft))
                         {s.data.title}
                       </p>
                       <time datetime={s.data.date.toISOString()} class="mt-1 block text-sm text-neutral-500">
-                        {formatDate(s.data.date)}
+                        {formatDateTimeSmart(s.data.date)}
                       </time>
                     </div>
                   </a>
@@ -81,6 +97,10 @@ const albums = (await getCollection('galleryAlbums', ({ data }) => !data.draft))
               );
             })}
           </ul>
+          <p id="archive-empty" class="hidden rounded-2xl bg-sand-50 p-8 text-center text-neutral-500 ring-1 ring-sand-200">
+            該年份尚無直播存檔。
+          </p>
+          <script src="/scripts/year-filter.js" defer></script>
         </div>
       </section>
     )

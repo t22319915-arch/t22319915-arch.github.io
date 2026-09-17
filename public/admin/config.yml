@@ -54,10 +54,14 @@ collections:
     format: frontmatter
     create: true
     slug: "{{year}}-{{month}}-{{day}}"
-    summary: "{{title}}（{{date | date('YYYY/MM/DD')}}）"
+    summary: "{{title}}（{{date | date('YYYY/MM/DD HH:mm')}}）"
     fields:
       - { label: 標題（例：2026.09.06 主日禮拜）, name: title, widget: string }
-      - { label: 日期, name: date, widget: datetime, format: YYYY-MM-DD }
+      - label: 日期時間
+        name: date
+        widget: datetime
+        format: YYYY-MM-DD HH:mm
+        hint: 日期與時間都可調整（時間例如 09:00）
       - { label: YouTube 連結, name: youtubeUrl, widget: string, hint: 貼上 YouTube 影片或直播網址 }
       - { label: 說明, name: description, widget: text, required: false }
       - { label: 設為本週直播（首頁顯示）, name: isCurrentWeek, widget: boolean, default: false, hint: 一次只保留一筆勾選，舊的請取消勾選 }
@@ -75,7 +79,11 @@ collections:
     summary: "{{title}}"
     fields:
       - { label: 標題, name: title, widget: string }
-      - { label: 日期, name: date, widget: datetime, format: YYYY-MM-DD }
+      - label: 日期時間
+        name: date
+        widget: datetime
+        format: YYYY-MM-DD HH:mm
+        hint: 日期與時間都可調整
       - label: 分類
         name: category
         widget: select
@@ -119,7 +127,11 @@ collections:
     summary: "{{title}}"
     fields:
       - { label: 相簿標題（例：2026.09.06 郊外禮拜）, name: title, widget: string }
-      - { label: 活動日期（相簿依此排序）, name: date, widget: datetime, format: YYYY-MM-DD }
+      - label: 活動日期時間（相簿依此排序）
+        name: date
+        widget: datetime
+        format: YYYY-MM-DD HH:mm
+        hint: 日期與時間都可調整
       - { label: 封面圖片, name: cover, widget: image, required: false }
       - { label: 說明, name: description, widget: text, required: false }
       - { label: 照片（可多選上傳）, name: photos, widget: list, field: { label: 照片, name: photo, widget: image } }

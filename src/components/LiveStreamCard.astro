@@ -1,6 +1,6 @@
 ---
 import { toEmbedUrl, toWatchUrl } from '../utils/youtube';
-import { formatDate } from '../utils/date';
+import { formatDateTimeSmart } from '../utils/date';
 
 export interface LiveStreamData {
   title: string;
@@ -44,7 +44,7 @@ const watchUrl = stream ? toWatchUrl(stream.youtubeUrl) : null;
               本週直播
             </span>
             <time datetime={stream.date.toISOString()} class="text-sm text-neutral-500">
-              {formatDate(stream.date)}
+              {formatDateTimeSmart(stream.date)}
             </time>
           </div>
           <h3 class="mt-3 text-xl font-bold text-navy-900">{stream.title}</h3>

@@ -1,5 +1,5 @@
 ---
-import { formatDate, categoryLabel } from '../utils/date';
+import { formatDateTimeSmart, categoryLabel } from '../utils/date';
 
 export interface AnnouncementItem {
   title: string;
@@ -36,7 +36,7 @@ const { items } = Astro.props;
                   {item.title}
                 </span>
                 <time datetime={item.date.toISOString()} class="shrink-0 text-sm text-neutral-500">
-                  {formatDate(item.date)}
+                  {formatDateTimeSmart(item.date)}
                 </time>
               </a>
             </li>

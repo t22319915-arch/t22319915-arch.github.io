@@ -1,5 +1,5 @@
 ---
-import { formatDate } from '../utils/date';
+import { formatDateTimeSmart } from '../utils/date';
 
 interface Props {
   title: string;
@@ -36,7 +36,7 @@ const { title, href, date, cover, photoCount } = Astro.props;
     </div>
     <div class="p-5">
       <time datetime={date.toISOString()} class="text-sm text-neutral-500">
-        {formatDate(date)}
+        {formatDateTimeSmart(date)}
       </time>
       <h3 class="mt-1 line-clamp-2 font-bold leading-7 text-navy-900 group-hover:text-brick-700 group-hover:underline group-hover:underline-offset-4">
         {title}

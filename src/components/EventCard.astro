@@ -1,5 +1,5 @@
 ---
-import { formatDateShort, categoryLabel } from '../utils/date';
+import { formatDateShort, formatTime, hasTime, categoryLabel } from '../utils/date';
 
 interface Props {
   title: string;
@@ -36,7 +36,7 @@ const { title, href, date, category, description, image } = Astro.props;
           {categoryLabel(category)}
         </span>
         <time datetime={date.toISOString()} class="text-neutral-500">
-          {formatDateShort(date)}
+          {formatDateShort(date)}{hasTime(date) ? ` ${formatTime(date)}` : ''}
         </time>
       </div>
       <h3 class="mt-2 line-clamp-2 font-bold leading-7 text-navy-900 group-hover:text-brick-700 group-hover:underline group-hover:underline-offset-4">

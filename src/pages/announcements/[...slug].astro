@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { formatDate, categoryLabel } from '../../utils/date';
+import { formatDateTimeSmart, categoryLabel } from '../../utils/date';
 
 export async function getStaticPaths() {
   const items = (await getCollection('announcements', ({ data }) => !data.draft)).sort(
@@ -40,7 +40,7 @@ const slugOf = (id: string) => id.replace(/\.md$/, '');
         {categoryLabel(item.data.category)}
       </span>
       <time datetime={item.data.date.toISOString()} class="text-neutral-500">
-        {formatDate(item.data.date)}
+        {formatDateTimeSmart(item.data.date)}
       </time>
     </div>
 

@@ -17,6 +17,10 @@ pnpm-debug.log*
 .env
 .env.production
 
+# YouTube 匯入暫存（權杖絕不可提交；CSV 為預覽檔）
+.yt-token.json
+streams-preview.csv
+
 # macOS-specific files
 .DS_Store
 

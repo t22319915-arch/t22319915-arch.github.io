@@ -18,23 +18,45 @@
  *  - GET /callback  → 用 code 換 token，回傳 postMessage 給 CMS 視窗
  */
 
-function successPage(payloadJson) {
-  // Decap CMS 期待的訊息格式：authorization:<provider>:success:<json>
-  // payloadJson 只包含 token 與 provider 字串，不含使用者可控的引號，可安全內嵌。
+function successPage(message) {
+  // Decap CMS 3.x 登入是「兩段式握手」（缺一不可）：
+  //  1. 彈窗先送 "authorizing:github" 給主視窗；
+  //  2. CMS 切換監聽器後，把同樣訊息回傳給彈窗；
+  //  3. 彈窗收到回音，才送 "authorization:github:success:{...}"。
+  // 若缺少第 1 步，CMS 永遠不會切換監聽器，成功訊息會被直接忽略、
+  // 登入彈窗就會一直卡在「授權成功」畫面。
+  const messageLiteral = JSON.stringify(message);
   return `<!doctype html>
 <html lang="zh-Hant">
 <head><meta charset="utf-8"><title>授權成功</title></head>
 <body>
-<p style="font-family:sans-serif">授權成功，視窗即將自動關閉…</p>
+<p style="font-family:sans-serif">授權成功，正在登入後台…</p>
 <script>
 (function () {
-  var message = 'authorization:github:success:' + ${payloadJson};
-  function send() {
-    if (window.opener) window.opener.postMessage(message, '*');
+  var HANDSHAKE = 'authorizing:github';
+  var SUCCESS = ${messageLiteral};
+  var done = false;
+  function sendHandshake() {
+    if (window.opener) window.opener.postMessage(HANDSHAKE, '*');
   }
-  send();
-  var timer = setInterval(send, 500);
-  setTimeout(function () { clearInterval(timer); window.close(); }, 4000);
+  function sendSuccess() {
+    if (done) return;
+    done = true;
+    if (window.opener) window.opener.postMessage(SUCCESS, '*');
+  }
+  // 收到 CMS 的握手回音後，送出登入憑證
+  window.addEventListener('message', function (e) {
+    if (e.data === HANDSHAKE) sendSuccess();
+  });
+  // 主動發起握手（重複幾次，確保 CMS 有收到）
+  sendHandshake();
+  var timer = setInterval(sendHandshake, 500);
+  // 逾時保護：8 秒後仍未完成握手就直接送憑證並關閉（相容舊版 CMS）
+  setTimeout(function () {
+    clearInterval(timer);
+    sendSuccess();
+    setTimeout(function () { window.close(); }, 1500);
+  }, 8000);
 })();
 </script>
 </body>
@@ -112,7 +134,8 @@ export default {
         }
 
         const payload = JSON.stringify({ token: data.access_token, provider: 'github' });
-        return new Response(successPage(payload), {
+        const message = `authorization:github:success:${payload}`;
+        return new Response(successPage(message), {
           status: 200,
           headers: { 'Content-Type': 'text/html; charset=utf-8' },
         });

@@ -18,6 +18,7 @@
 5. [新增牧師／同工介紹](#5-新增牧師同工介紹)
 6. [修改基本資料（地址、電話、聚會時間）](#6-修改基本資料地址電話聚會時間)
 6a. [上傳主日週報／換新人表單／改奉獻帳號](#6a-上傳主日週報換新人表單改奉獻帳號)
+6b. [每週發布腳本（維護者一鍵備檔）](#6b-每週發布腳本維護者一鍵備檔)
 7. [網站地圖](#7-網站地圖)
 8. [本機開發（給協作者）](#8-本機開發給協作者)
 9. [常見問題](#9-常見問題)
@@ -104,6 +105,25 @@ Facebook／YouTube 連結、**聚會時間表**（可新增、刪除、調整順
 通知會寄到建表單的 Google 帳號（請用 tcfc.tw@gmail.com 建表單）。
 
 **改奉獻帳號**：同上基本資料 → **奉獻銀行／帳號／戶名／備註** → 發布，奉獻頁同步更新。
+
+---
+
+## 6b. 每週發布腳本（維護者一鍵備檔，免手拼檔名）
+
+有週報 PDF＋直播連結時，不用進後台，跑腳本備好檔後 push 即可：
+
+```powershell
+# 1. 預覽（只檢查＋列出將寫入的檔案，不動任何檔案）
+node scripts/publish-weekly.js --pdf "D:/path/週報2507(20261018).pdf" --date 2026-10-18 --issue 2507 --youtube "https://www.youtube.com/watch?v=xxxx"
+# 2. 內容無誤，加 --write 實際寫入
+node scripts/publish-weekly.js --pdf "D:/path/週報2507(20261018).pdf" --date 2026-10-18 --issue 2507 --youtube "https://www.youtube.com/watch?v=xxxx" --write
+# 3. 該週無直播：省略 --youtube，只上週報
+node scripts/publish-weekly.js --pdf "D:/path/週報2505(20261004).pdf" --date 2026-10-04 --issue 2505 --write
+# 4. 複核＋上線
+git status --short; git add <本次檔案>; git commit -m "..."; git push origin main
+```
+
+規則：檔名 `週報XXXX(YYYYMMDD).pdf` 即期號與日期；目標檔已存在時預設拒寫（加 `--force` 才覆寫）。
 
 ---
 

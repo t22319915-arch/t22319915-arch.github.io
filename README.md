@@ -119,8 +119,8 @@ node scripts/publish-weekly.js --pdf "D:/path/週報2507(20261018).pdf" --date 2
 node scripts/publish-weekly.js --pdf "D:/path/週報2507(20261018).pdf" --date 2026-10-18 --issue 2507 --youtube "https://www.youtube.com/watch?v=xxxx" --write
 # 3. 該週無直播：省略 --youtube，只上週報
 node scripts/publish-weekly.js --pdf "D:/path/週報2505(20261004).pdf" --date 2026-10-04 --issue 2505 --write
-# 4. 複核＋上線
-git status --short; git add <本次檔案>; git commit -m "..."; git push origin main
+# 4. 一鍵發布（自動 commit、push，並等待部署完成）
+node scripts/publish-site.mjs -m "新增主日直播與週報：2026.10.18（2507期）"
 ```
 
 規則：檔名 `週報XXXX(YYYYMMDD).pdf` 即期號與日期；目標檔已存在時預設拒寫（加 `--force` 才覆寫）。
@@ -155,6 +155,9 @@ npm run build    # 產出 dist/
 ```
 
 推送到 `main` 分支即自動部署（`.github/workflows/deploy.yml`：安裝→檢查→建置→發布到 Pages，約 1–2 分鐘）。
+
+**一鍵發布**：改完任何內容後執行 `node scripts/publish-site.mjs -m "更新說明"`，
+會自動對齊 GitHub 最新版、commit、push，並等待部署完成回報結果（`.git` 遺失時會自動重建）。
 
 ### 專案結構
 

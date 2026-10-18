@@ -1,3 +1,16 @@
+## 網站發布（固定流程，必遵守）
+
+完成任何內容更新（照片、公告、週報、頁面調整等）後，**一律直接發布、不需詢問使用者確認**：
+
+```
+node scripts/publish-site.mjs -m "本次更新簡短說明"
+```
+
+- 腳本會自動：對齊 GitHub 最新版 → commit → push `main` → 等待 GitHub Actions 部署完成並回報結果
+- `.git` 遺失或損壞時腳本會自動重建（Synology 同步環境曾發生多次，本機檔案不受影響）
+- 唯一例外：使用者明確說「先不要發布／只改本機」時才不發布
+- 發布完成後回報：commit、Actions 結果、網站網址（https://t22319915-arch.github.io/）
+
 ## Development
 
 When starting the dev server, use background mode:

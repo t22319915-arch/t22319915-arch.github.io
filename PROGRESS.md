@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: AFRO
-- last_updated: 2026-10-28T14:05:00+08:00
+- last_updated: 2026-10-28T14:25:00+08:00
 - sync_state: pending
-- handoff: 2026-10-28 於 ASUS clone `t22319915-arch/t22319915-arch.github.io` 到 `D:\AI-Projects\教會網站_台中北屯貴格會`（HEAD `afe4111`，278 檔、1.8 MB／檔以內）。尚未執行 Phase 0 健檢修正；Synology 鏡像尚未建立。
+- handoff: 2026-10-28 於 ASUS clone `t22319915-arch/t22319915-arch.github.io` 到 `D:\AI-Projects\教會網站_台中北屯貴格會`（HEAD `afe4111`，278 檔、1.8 MB／檔以內）。尚未執行 Phase 0 健檢修正；Synology 鏡像已建立（277 檔、72.44 MB），待上傳確認。
 
 ## 目前目標
 
@@ -13,6 +13,7 @@
 
 - 2026-10-27 全站健檢：sitemap 131 網址、43 期週報 PDF 全部 200、CMS OAuth worker 正常。
 - 2026-10-28 從 GitHub clone 到本機工作區，改由 `D:\AI-Projects\教會網站_台中北屯貴格會` 作為正本；Synology `_CaseConflict` 資料夾不再編輯。
+- 2026-10-28 建立 Synology 鏡像 `_mirror\教會網站_台中北屯貴格會`（277 檔、72.44 MB）；等雲端上傳確認後再把 `sync_state` 改 `synced`。
 
 ## 進行中
 
@@ -23,7 +24,7 @@
 1. Phase 0 健檢修正（見駕駛艙「下一步」）。
 2. Phase 1.5：歷史週報 74 期匯入（2391–2465，2424 缺）。
 3. Phase 1：補牧師團隊、信仰宣言、教會簡介、交通資訊與 2026.04.12 相簿。
-4. 第一次收工時建立 Synology 鏡像（`workflow\mirror.ps1`，先 `-WhatIf`）。
+4. 確認 Synology `_mirror\教會網站_台中北屯貴格會` 上傳完成後，把 `sync_state` 改 `synced`。
 
 ## 風險／阻塞
 

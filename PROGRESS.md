@@ -3,7 +3,7 @@
 - last_machine: AFRO
 - last_updated: 2026-11-06T12:27:10+08:00
 - sync_state: synced
-- handoff: 2026-11-06 收工（實際寫入機為 LAPTOP-IISERVR8，本機路徑 `C:\AI-Projects`；`last_machine: AFRO` 與 `D:\` 路徑為 2026-10-28 原歷史紀錄，依指示保留未覆寫）。**確認 Meta 已移除粉專層級一次性匯出**：粉專設定／Business Suite／專業主控板三個入口都導向個人帳號「下載你的資訊」，且該頁「粉絲專頁」分類只含按讚與追蹤、不含管理的粉專內容。Phase B 取消，改以 Graph API 為唯一取得管道；下次直接做 Phase A：建 Meta app（開發模式）→ Graph API Explorer 取 page token → 測 `me?fields=id,name,fan_count` 與 `me/posts?...&limit=5`。
+- handoff: 2026-11-06 收工（實際寫入機為 LAPTOP-IISERVR8，本機路徑 `C:\AI-Projects`；`last_machine: AFRO` 與 `D:\` 路徑為 2026-10-28 原歷史紀錄，依指示保留未覆寫）。**確認 Meta 已移除粉專層級一次性匯出**：粉專設定／Business Suite／專業主控板三個入口都導向個人帳號「下載你的資訊」，且該頁「粉絲專頁」分類只含按讚與追蹤、不含管理的粉專內容。Phase B 取消，改以 Graph API 為唯一取得管道；下次直接做 Phase A：建 Meta app（開發模式）→ Graph API Explorer 取 page token → 測 `me?fields=id,name,fan_count` 與 `me/posts?...&limit=5`。已同步：Synology 鏡像重建 277 檔、72.44 MB，`check-drive` 判定 `SYNCED`（12:33）。
 - MCP：notebooklm, notion
 
 ## 目前目標

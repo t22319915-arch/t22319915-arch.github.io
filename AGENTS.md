@@ -11,6 +11,13 @@ node scripts/publish-site.mjs -m "本次更新簡短說明"
 - 唯一例外：使用者明確說「先不要發布／只改本機」時才不發布
 - 發布完成後回報：commit、Actions 結果、網站網址（https://t22319915-arch.github.io/）
 
+## 素材與資料夾約定
+
+- `教會資料\`：原始素材收件匣（粉專匯出、照片、文件），已列入 `.gitignore`，不進 Git、不發布。
+- 子資料夾：`01_粉專匯出\`、`02_照片\`、`03_文件\`、`04_待分類\`；規則見 `教會資料\README.md`。
+- 上網站時只複製挑選並壓縮後的檔案到 `public/uploads/`（或 `src/assets/`），原始大圖留在原地。
+- 此資料夾不參與 Git／Synology 同步，只存在目前這台電腦，重要素材需另行備份。
+
 ## Development
 
 When starting the dev server, use background mode:

@@ -21,6 +21,9 @@ pnpm-debug.log*
 .yt-token.json
 streams-preview.csv
 
+# 教會原始素材（照片、文件、粉專匯出）：只留在本機，不進 Git
+教會資料/
+
 # macOS-specific files
 .DS_Store
 

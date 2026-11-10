@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-08T14:20:54+08:00
-- sync_state: synced
-- handoff: 2026-11-08 收工。使用者重新下載 FB 粉專匯出（`facebook-tcfcTAIWAN-2026-11-8-sl9t9nEA.zip`，74 KB／4 檔），已驗證是本粉專（`@tcfcTAIWAN`，分類「基督教會」，官網 `tcfc.tw`，地址衛道路112號），但**只有 `profile_information`，沒有貼文、相片、影片、粉絲名單、洞察報告**，再次印證 2026-11-06 的結論，Phase B 維持取消。已在專案根目錄建立 `教會資料\` 素材收件匣（01_粉專匯出／02_照片／03_文件／04_待分類），並列入 `.gitignore`；該 zip 已解壓進 `01_粉專匯出`，`profile_information.json` 另解碼成可讀的 `粉專基本資料.md`。**注意：`教會資料\` 不進 Git、也不同步，只存在本機（LAPTOP-IISERVR8）**。下次開工：等使用者把照片放進 `02_照片`，再盤點素材、挑圖上架；或續跑 FB 素材庫 Phase A（Graph API）。
+- last_updated: 2026-11-10T11:40:00+08:00
+- sync_state: pending
+- handoff: 2026-11-10 開工驗證 2509／2510 上架與 `5817edc`，結果正常：兩期週報 PDF 線上回 200、大小與本機一致（1,584,682／1,468,309 bytes），週報頁同時列出 2509、2510；首頁顯示 2026.11.08 直播（`Y7HNCo-B_I4`），11-01 已自動退場。`5817edc` 刪除的是誤放在 `src/content/bulletins/public/uploads/bulletins/` 的重複 2505 檔（1450129 bytes，與正式檔 `public/uploads/bulletins/bulletin-2026-10-04.pdf` 同大小），該路徑不在 Astro 服務範圍，刪除不影響線上。**新發現**：11-08 影片在 YouTube 為 `playableInEmbed=false`（禁止嵌入），網站 iframe 會顯示無法播放，需到 YouTube Studio 打開「允許嵌入」或在頁面補「在 YouTube 觀看」連結。`check-drive` 判定 Synology `PENDING`（0 待處理事件、1 筆 file-status），故 `sync_state` 暫改 `pending`。`教會資料\` 仍只在本機，`02_照片` 尚空；Phase A 未開始。
 - MCP：notebooklm, notion
 
 ## 目前目標
@@ -23,6 +23,9 @@
 - 2026-11-08 驗證使用者下載的 FB 粉專匯出 zip：確認為本粉專（`@tcfcTAIWAN`、分類「基督教會」、官網 `tcfc.tw`、衛道路112號），但內容僅 `profile_information` 4 檔，無貼文／相片／影片／粉絲／洞察。
 - 2026-11-08 建立 `教會資料\` 素材收件匣（01_粉專匯出／02_照片／03_文件／04_待分類），已 gitignore；匯出檔解壓完成，並產出可讀的 `粉專基本資料.md`（含 321 理念與聚會時間）。
 - 2026-11-08 更新 `.gitignore`（`教會資料/`）並發布（`6a2b322`）。
+- 2026-11-08 上架 2509（2026.11.01）、2510（2026.11.08）期週報與兩週主日直播（`2073671`）。
+- 2026-11-09 移除誤放的 2505 期重複 PDF（`5817edc`）；原檔在 `src/content/bulletins/public/uploads/bulletins/`，不在服務路徑，線上不受影響。
+- 2026-11-10 開工驗證上述兩筆：線上 PDF 200、大小一致、週報頁列 2509／2510、首頁顯示 11-08 直播；另查出 11-08 影片禁止嵌入。
 
 ## 進行中
 
@@ -31,10 +34,11 @@
 ## 待辦
 
 1. FB 歷史素材庫 Phase A：建 Meta app、用 Graph API Explorer 打 `GET /me/accounts` 與 `GET /{page-id}/posts?limit=5`，確認自家粉專資料讀得到（約半天，不寫程式）。
-2. Phase 0 健檢修正（見駕駛艙「下一步」）。
-3. 等使用者把照片／文件放進 `教會資料\`，盤點素材並挑選適合上網站的內容（相簿、教會簡介、場地照）。
-4. Phase 1.5：歷史週報 74 期匯入（2391–2465，2424 缺）。
-5. Phase 1：補牧師團隊、信仰宣言、教會簡介、交通資訊與 2026.04.12 相簿。
+2. 到 YouTube Studio 開啟 2026-11-08 直播（`Y7HNCo-B_I4`）的「允許嵌入」；目前禁止嵌入，網站 iframe 顯示無法播放。
+3. Phase 0 健檢修正（見駕駛艙「下一步」）。
+4. 等使用者把照片／文件放進 `教會資料\`，盤點素材並挑選適合上網站的內容（相簿、教會簡介、場地照）。
+5. Phase 1.5：歷史週報 74 期匯入（2391–2465，2424 缺）。
+6. Phase 1：補牧師團隊、信仰宣言、教會簡介、交通資訊與 2026.04.12 相簿。
 
 ## 風險／阻塞
 
@@ -44,6 +48,7 @@
 - 2026-10-04 主日直播連結從缺、2424 期週報缺件（沿用舊紀錄）。
 - 本站是 GitHub Pages（總量 1 GB、單檔 100 MB）且 repo 為公開：FB 原始照片與影片**不得進 Git**，只放精選壓縮後的相簿。
 - 歷史照片與兒童肖像的使用同意原則尚未定案，會阻塞相簿上架（Phase D），不會阻塞 Phase A 驗證。
+- 2026-11-08 直播影片 `Y7HNCo-B_I4` 在 YouTube 設為禁止嵌入（`playableInEmbed=false`），首頁與直播頁 iframe 會顯示無法播放。
 - 歷史資料取得只剩 Graph API 一條路（官方粉專匯出已不可用）；若 API 也不通，只能人工逐本相簿下載，約 30 本、可分次完成。
 - 若貼文是先用個人帳號發布、再分享到粉專，不會出現在粉專 API，需人工補或放棄。
 - `教會資料\`（素材收件匣）已 gitignore，**只存在目前這台 LAPTOP-IISERVR8，不會透過 Git 或 Synology 同步**；換電腦就看不到，重要素材要另外備份。
@@ -61,3 +66,4 @@
 - 2026-11-06：評估 FB 歷史資料取得方式（比較 Apify 模式、盤點 GitHub 現成專案），決議改走 Meta Graph API；建立 FB 歷史素材庫計畫（三層架構、Phase A–E），掛入待辦第 1 項。本項由 `ai-agent-external-tools` 轉入。
 - 2026-11-06：實測粉專匯出，確認三個入口（粉專設定／Business Suite／專業主控板）都導向個人帳號「下載你的資訊」，「粉絲專頁」分類僅含按讚與追蹤。Phase B 取消，改以 Graph API 為唯一管道；`sync_state` 確認為 `synced`。
 - 2026-11-08：驗證新下載的 FB 匯出 zip（僅 `profile_information`，無貼文與照片），確認是本粉專；建立 `教會資料\` 素材收件匣並 gitignore，解壓匯出檔、產出 `粉專基本資料.md`；發布 `6a2b322`。
+- 2026-11-10：開工後驗證 2509／2510 上架與 `5817edc` 重複檔清理，線上 PDF、週報頁、首頁直播都正常；查出 11-08 影片禁止嵌入；補記兩筆未入 PROGRESS 的提交，修正駕駛艙 head。

@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-10T12:35:00+08:00
-- sync_state: pending
-- handoff: 2026-11-10 收工。`afrokhl-alt` 已接受 collaborator 邀請並成功登入 CMS；雙身分規則（`t22319915-arch`＝owner／本機 commit，`afrokhl-alt`＝瀏覽器／CMS）已寫入專案與全域 `AGENTS.md`。本日另驗證 2509／2510 上架與 `5817edc` 清理正常；待處理：11-08 直播影片禁止嵌入、Phase 0。`教會資料\` 仍只在本機，`02_照片` 尚空。
+- last_updated: 2026-11-10T12:48:00+08:00
+- sync_state: synced
+- handoff: 2026-11-10 收工。`afrokhl-alt` 已接受 collaborator 邀請並成功登入 CMS；雙身分規則（`t22319915-arch`＝owner／本機 commit，`afrokhl-alt`＝瀏覽器／CMS）已寫入專案與全域 `AGENTS.md`。本日另驗證 2509／2510 上架與 `5817edc` 清理正常；待處理：11-08 直播影片禁止嵌入、Phase 0。Synology 鏡像已同步（`check-drive` SYNCED，12:43）。`教會資料\` 仍只在本機，`02_照片` 尚空。
 - MCP：notebooklm, notion
 
 ## 目前目標

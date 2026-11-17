@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+---
+
+<Layout
+  title="隱私權政策"
+  description={`${site.churchName}隱私權政策：說明本網站與直播管理工具如何處理資料。`}
+>
+  <section class="bg-navy-900">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <p class="text-sm font-bold tracking-[0.2em] text-sand-300">PRIVACY POLICY</p>
+      <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">隱私權政策</h1>
+      <p class="mt-3 text-navy-100">本會如何蒐集、使用與保護資料。</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
+    <div class="rich-text rounded-2xl bg-white p-6 shadow-md ring-1 ring-sand-200 sm:p-8">
+      <p>最後更新：2026 年 11 月 17 日</p>
+
+      <h2>一、適用範圍</h2>
+      <p>
+        本政策適用於{site.churchName}（以下稱「本會」）的官方網站，以及本會使用的直播管理工具（以下稱「本工具」）。
+        本工具供本會直播同工使用，透過 Google 的 YouTube Data API 建立、查詢與管理本會
+        YouTube 頻道（<a href={site.youtubeChannelUrl} target="_blank" rel="noopener noreferrer">@北屯貴格會直播</a>）的直播場次。
+      </p>
+
+      <h2>二、本工具使用的資料</h2>
+      <ul>
+        <li>僅使用經管理者本人同意的 Google 帳號，存取本會頻道的直播管理相關資料：直播場次、標題、隱私設定、排定時間與串流設定。</li>
+        <li>使用範圍為 <code>https://www.googleapis.com/auth/youtube</code>，不會存取 Gmail、Google 雲端硬碟、通訊錄或其他 Google 服務。</li>
+        <li>目前版本不讀取、也不保存觀眾資料、觀看紀錄或直播聊天室內容。</li>
+      </ul>
+
+      <h2>三、授權憑證的保存</h2>
+      <ul>
+        <li>OAuth 授權憑證只儲存在管理者個人電腦的本機資料夾，不上傳至本會網站、雲端硬碟或任何第三方服務。</li>
+        <li>憑證不寫入網站程式碼、不納入版本控制，也不提供給其他人使用。</li>
+        <li>管理者可隨時至 Google 帳號的「安全性 → 第三方應用程式與服務」撤銷授權，撤銷後本工具即無法再存取頻道。</li>
+      </ul>
+
+      <h2>四、資料分享</h2>
+      <p>
+        本會不會販售、交換或提供上述資料給任何第三人。除依法規要求或主管機關依法調查外，不會對外揭露。
+      </p>
+
+      <h2>五、網站瀏覽</h2>
+      <p>
+        本網站為靜態網站，不設會員帳號，也不主動蒐集瀏覽者的個人資料。網站託管於 GitHub Pages，
+        GitHub 可能基於安全與流量統計記錄連線資訊（例如 IP 位址、瀏覽器類型），相關處理請參閱
+        GitHub 的隱私權聲明。
+      </p>
+
+      <h2>六、兒童與未成年人</h2>
+      <p>
+        本會網站與本工具不主動蒐集兒童或未成年人的個人資料。若您發現有相關資料誤被留存，請與本會聯絡，我們將儘速刪除。
+      </p>
+
+      <h2>七、您的權利</h2>
+      <p>
+        您可向本會查詢、請求更正或刪除本會持有的您的個人資料，也可撤回先前提供的同意。
+        請透過下列方式與我們聯絡。
+      </p>
+
+      <h2>八、政策修訂</h2>
+      <p>
+        本會可能因服務調整或法規變動修訂本政策，修訂後將更新本頁內容與「最後更新」日期，不另行個別通知。
+      </p>
+
+      <h2>九、聯絡方式</h2>
+      <ul>
+        <li>教會名稱：{site.churchName}</li>
+        <li>地址：{site.address}</li>
+        <li>電話：<a href={`tel:${site.phone.replace(/[^+\d]/g, '')}`}>{site.phone}</a></li>
+        <li>Email：<a href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+    </div>
+  </section>
+</Layout>

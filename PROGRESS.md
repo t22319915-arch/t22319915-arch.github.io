@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-10T12:48:00+08:00
-- sync_state: synced
-- handoff: 2026-11-10 收工。`afrokhl-alt` 已接受 collaborator 邀請並成功登入 CMS；雙身分規則（`t22319915-arch`＝owner／本機 commit，`afrokhl-alt`＝瀏覽器／CMS）已寫入專案與全域 `AGENTS.md`。本日另驗證 2509／2510 上架與 `5817edc` 清理正常；待處理：11-08 直播影片禁止嵌入、Phase 0。Synology 鏡像已同步（`check-drive` SYNCED，12:43）。`教會資料\` 仍只在本機，`02_照片` 尚空。
+- last_updated: 2026-11-17T08:23:00+08:00
+- sync_state: pending
+- handoff: 2026-11-17 上架 2511 期週報（2026.11.15）與 11-15 主日直播（`Gke-Zx76yOg`），並把 11-01、11-08 的 `isCurrentWeek` 取消。**11-15 影片在 YouTube 同樣禁止嵌入**（`playableInEmbed=false`），網站已有「在 YouTube 觀看」按鈕可點，但 iframe 會顯示無法播放；建議到 YouTube Studio 把頻道預設改成允許嵌入。`教會資料\02_照片` 仍空，Phase A／Phase 0 未開始。
 - MCP：notebooklm, notion
 
 ## 目前目標
@@ -28,6 +28,7 @@
 - 2026-11-10 開工驗證上述兩筆：線上 PDF 200、大小一致、週報頁列 2509／2510、首頁顯示 11-08 直播；另查出 11-08 影片禁止嵌入。
 - 2026-11-10 診斷 CMS 登入失敗：Worker、OAuth 憑證、線上設定都正常，原因是瀏覽器帳號 `afrokhl-alt` 對 repo 沒有 push 權限；已邀為 collaborator（write），並在 `AGENTS.md` 明定「repo owner／commit 作者」與「CMS 登入帳號」分工。
 - 2026-11-10 `afrokhl-alt` 接受 collaborator 邀請，CMS 後台登入成功；雙身分規則同步寫入全域 `AGENTS.md`。
+- 2026-11-17 上架 2511 期週報（2026.11.15，1,678,091 bytes）與 11-15 主日直播（`Gke-Zx76yOg`，信息：質疑、拒絕與災禍（二））；11-01、11-08 的 `isCurrentWeek` 取消。
 
 ## 進行中
 
@@ -36,7 +37,7 @@
 ## 待辦
 
 1. FB 歷史素材庫 Phase A：建 Meta app、用 Graph API Explorer 打 `GET /me/accounts` 與 `GET /{page-id}/posts?limit=5`，確認自家粉專資料讀得到（約半天，不寫程式）。
-2. 到 YouTube Studio 開啟 2026-11-08 直播（`Y7HNCo-B_I4`）的「允許嵌入」；目前禁止嵌入，網站 iframe 顯示無法播放。
+2. 到 YouTube Studio 開啟 2026-11-08（`Y7HNCo-B_I4`）與 2026-11-15（`Gke-Zx76yOg`）直播的「允許嵌入」；兩支目前都禁止嵌入，網站 iframe 會顯示無法播放。建議把頻道預設改成允許嵌入。
 3. Phase 0 健檢修正（見駕駛艙「下一步」）。
 4. 等使用者把照片／文件放進 `教會資料\`，盤點素材並挑選適合上網站的內容（相簿、教會簡介、場地照）。
 5. Phase 1.5：歷史週報 74 期匯入（2391–2465，2424 缺）。
@@ -44,13 +45,13 @@
 
 ## 風險／阻塞
 
-- 本機尚無 `node_modules`；`astro dev`／`build` 需先 `npm install`。
-- 發布腳本 `scripts/publish-site.mjs` 會自動 commit＋push＋等待 Actions；未安裝相依前不要執行。
+- 本機尚無 `node_modules`；`astro dev`／`build` 需先 `npm install`；`scripts/publish-site.mjs` 只需 Node 與 `gh`，不需要 `node_modules`。
+- `publish-site.mjs` 會自動 commit＋push＋等待 Actions；部署失敗或逾時要自行到 Actions 頁確認。
 - repo 是 GitHub Pages 使用者站（`t22319915-arch.github.io`），remote 名稱不可改。
 - 2026-10-04 主日直播連結從缺、2424 期週報缺件（沿用舊紀錄）。
 - 本站是 GitHub Pages（總量 1 GB、單檔 100 MB）且 repo 為公開：FB 原始照片與影片**不得進 Git**，只放精選壓縮後的相簿。
 - 歷史照片與兒童肖像的使用同意原則尚未定案，會阻塞相簿上架（Phase D），不會阻塞 Phase A 驗證。
-- 2026-11-08 直播影片 `Y7HNCo-B_I4` 在 YouTube 設為禁止嵌入（`playableInEmbed=false`），首頁與直播頁 iframe 會顯示無法播放。
+- 2026-11-08 直播影片 `Y7HNCo-B_I4`、2026-11-15 直播影片 `Gke-Zx76yOg` 在 YouTube 都設為禁止嵌入（`playableInEmbed=false`），首頁與直播頁 iframe 會顯示無法播放；頁面已有「在 YouTube 觀看」按鈕可點。
 - `afrokhl-alt` 已接受 collaborator 邀請（2026-11-10），CMS 登入正常。
 - CMS 發布的作者是 `afrokhl-alt`、本機發布是 `t22319915-arch`，`git log` 會混用兩種作者，屬正常；不要為了一致而改寫歷史。
 - 歷史資料取得只剩 Graph API 一條路（官方粉專匯出已不可用）；若 API 也不通，只能人工逐本相簿下載，約 30 本、可分次完成。
@@ -73,3 +74,4 @@
 - 2026-11-10：開工後驗證 2509／2510 上架與 `5817edc` 重複檔清理，線上 PDF、週報頁、首頁直播都正常；查出 11-08 影片禁止嵌入；補記兩筆未入 PROGRESS 的提交，修正駕駛艙 head。
 - 2026-11-10：診斷 CMS 登入問題，確認是 `afrokhl-alt` 無 repo 寫入權限；已邀為 collaborator，並在 `AGENTS.md` 明定「repo owner／commit 作者」與「CMS 登入帳號」分工。
 - 2026-11-10：`afrokhl-alt` 接受邀請，CMS 登入成功；收工。
+- 2026-11-17：上架 2511 期週報與 11-15 主日直播，取消 11-01、11-08 的「本週直播」標記。

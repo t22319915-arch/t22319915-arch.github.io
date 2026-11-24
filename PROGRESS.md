@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-24T09:25:00+08:00
-- sync_state: pending
-- handoff: 2026-11-24 第三輪：Phase 0 完成（保留測試公告）：刪 2505 重複 draft、09-12 直播改名 09-13 並加轉向、下架 3 支失效直播、新增 404 頁、修正 CMS slug、新增發布前檢查。測試公告依指示保留。剩餘 Phase 0 只有高解析 Hero／OG（需素材）與 `logo-white.jpg` 去留。本輪待鏡像。
+- last_updated: 2026-11-24T09:28:00+08:00
+- sync_state: synced
+- handoff: 2026-11-24 第三輪：Phase 0 完成（保留測試公告）：刪 2505 重複 draft、09-12 直播改名 09-13 並加轉向、下架 3 支失效直播、新增 404 頁、修正 CMS slug、新增發布前檢查（`6760f03`）。測試公告依指示保留。剩餘 Phase 0 只有高解析 Hero／OG（需素材）與 `logo-white.jpg` 去留。已鏡像，`check-drive` 判定 `SYNCED`（0 待處理、0 卡住）。
 - MCP：notebooklm, notion
 
 ## 目前目標

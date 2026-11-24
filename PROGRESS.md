@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-17T08:23:00+08:00
+- last_updated: 2026-11-24T08:45:00+08:00
 - sync_state: pending
-- handoff: 2026-11-17 上架 2511 期週報（2026.11.15）與 11-15 主日直播（`Gke-Zx76yOg`），並把 11-01、11-08 的 `isCurrentWeek` 取消。**11-15 影片在 YouTube 同樣禁止嵌入**（`playableInEmbed=false`），網站已有「在 YouTube 觀看」按鈕可點，但 iframe 會顯示無法播放；建議到 YouTube Studio 把頻道預設改成允許嵌入。`教會資料\02_照片` 仍空，Phase A／Phase 0 未開始。
+- handoff: 2026-11-24 上架 2512 期週報（2026.11.22）與 11-22 主日直播（`f5eYcDAGv-0`，信息：想不通的時候，進上帝的聖所，詩篇 73 篇），11-15 取消 `isCurrentWeek`。這支影片 oEmbed 正常回應，判斷**可嵌入**（與 11-08／11-15 不同）。另補記 2026-11-17 的隱私權政策頁（`543871c`）。本輪新增內容尚未鏡像到 Synology；開工時 `check-drive` 為 `SYNCED`，收工要再跑鏡像。
 - MCP：notebooklm, notion
 
 ## 目前目標
@@ -29,6 +29,8 @@
 - 2026-11-10 診斷 CMS 登入失敗：Worker、OAuth 憑證、線上設定都正常，原因是瀏覽器帳號 `afrokhl-alt` 對 repo 沒有 push 權限；已邀為 collaborator（write），並在 `AGENTS.md` 明定「repo owner／commit 作者」與「CMS 登入帳號」分工。
 - 2026-11-10 `afrokhl-alt` 接受 collaborator 邀請，CMS 後台登入成功；雙身分規則同步寫入全域 `AGENTS.md`。
 - 2026-11-17 上架 2511 期週報（2026.11.15，1,678,091 bytes）與 11-15 主日直播（`Gke-Zx76yOg`，信息：質疑、拒絕與災禍（二））；11-01、11-08 的 `isCurrentWeek` 取消。
+- 2026-11-17 新增隱私權政策頁 `src/pages/privacy.astro`（Google OAuth 應用程式發布用），Footer 加入連結（`543871c`）。
+- 2026-11-24 上架 2512 期週報（2026.11.22，1,615,407 bytes、4 頁）與 11-22 主日直播（`f5eYcDAGv-0`，信息：想不通的時候，進上帝的聖所，詩篇 73 篇）；11-15 取消 `isCurrentWeek`。影片 oEmbed 回應 200，判斷可嵌入。
 
 ## 進行中
 
@@ -38,14 +40,14 @@
 
 1. FB 歷史素材庫 Phase A：建 Meta app、用 Graph API Explorer 打 `GET /me/accounts` 與 `GET /{page-id}/posts?limit=5`，確認自家粉專資料讀得到（約半天，不寫程式）。
 2. 到 YouTube Studio 開啟 2026-11-08（`Y7HNCo-B_I4`）與 2026-11-15（`Gke-Zx76yOg`）直播的「允許嵌入」；兩支目前都禁止嵌入，網站 iframe 會顯示無法播放。建議把頻道預設改成允許嵌入。
-3. Phase 0 健檢修正（見駕駛艙「下一步」）。
+3. Phase 0 健檢修正（見駕駛艙「下一步」；隱私權政策頁已於 2026-11-17 完成，剩 404 頁等）。
 4. 等使用者把照片／文件放進 `教會資料\`，盤點素材並挑選適合上網站的內容（相簿、教會簡介、場地照）。
 5. Phase 1.5：歷史週報 74 期匯入（2391–2465，2424 缺）。
 6. Phase 1：補牧師團隊、信仰宣言、教會簡介、交通資訊與 2026.04.12 相簿。
 
 ## 風險／阻塞
 
-- 本機尚無 `node_modules`；`astro dev`／`build` 需先 `npm install`；`scripts/publish-site.mjs` 只需 Node 與 `gh`，不需要 `node_modules`。
+- 本機已有 `node_modules` 與 `dist`（2026-11-17）；換機或清掉後才需 `npm install`。`scripts/publish-site.mjs` 只需 Node 與 `gh`。
 - `publish-site.mjs` 會自動 commit＋push＋等待 Actions；部署失敗或逾時要自行到 Actions 頁確認。
 - repo 是 GitHub Pages 使用者站（`t22319915-arch.github.io`），remote 名稱不可改。
 - 2026-10-04 主日直播連結從缺、2424 期週報缺件（沿用舊紀錄）。
@@ -60,9 +62,9 @@
 
 ## 下一步
 
-1. 使用者把照片／文件放進 `教會資料\`（建議一活動一資料夾、檔名帶日期），再盤點素材、挑選上網站的內容。
-2. 跑 FB 素材庫 Phase A 第 1–4 步：建 Meta app（開發模式，不送審）→ Graph API Explorer 取 page token → 測 `me?fields=id,name,fan_count` 與 `me/posts?fields=id,created_time,message,permalink_url,attachments{media,subattachments}&limit=5`。
-3. `npm install` 驗證本機可 `astro build`，再開 Phase 0。
+1. 到 YouTube Studio 開啟 11-08（`Y7HNCo-B_I4`）與 11-15（`Gke-Zx76yOg`）直播的「允許嵌入」，並把頻道預設改成允許；11-22 直播 oEmbed 正常，已可嵌入。
+2. 繼續 Phase 0：補 404 頁、下架測試公告、刪重複 draft（含 `2026-10-03.md`）、修正 09-12 檔名、下架 3 支失效直播、修正 CMS slug。
+3. 使用者把照片／文件放進 `教會資料\`（一活動一資料夾、檔名帶日期）後盤點素材；或跑 FB 素材庫 Phase A（建 Meta app → Graph API Explorer 測 `me/accounts` 與 `/{page-id}/posts`）。
 
 ## 工作日誌
 
@@ -75,3 +77,5 @@
 - 2026-11-10：診斷 CMS 登入問題，確認是 `afrokhl-alt` 無 repo 寫入權限；已邀為 collaborator，並在 `AGENTS.md` 明定「repo owner／commit 作者」與「CMS 登入帳號」分工。
 - 2026-11-10：`afrokhl-alt` 接受邀請，CMS 登入成功；收工。
 - 2026-11-17：上架 2511 期週報與 11-15 主日直播，取消 11-01、11-08 的「本週直播」標記。
+- 2026-11-17：新增隱私權政策頁（`543871c`），Footer 加入連結。
+- 2026-11-24：上架 2512 期週報與 11-22 主日直播（`f5eYcDAGv-0`），11-15 取消「本週直播」；`astro build` 通過（136 頁）。同時修正文件：`node_modules` 風險已過時、`sync_state` 與 `check-drive` 的差異、駕駛艙 head 落後。

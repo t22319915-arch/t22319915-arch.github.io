@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-24T09:28:00+08:00
+- last_updated: 2026-11-24T13:17:00+08:00
 - sync_state: synced
-- handoff: 2026-11-24 第三輪：Phase 0 完成（保留測試公告）：刪 2505 重複 draft、09-12 直播改名 09-13 並加轉向、下架 3 支失效直播、新增 404 頁、修正 CMS slug、新增發布前檢查（`6760f03`）。測試公告依指示保留。剩餘 Phase 0 只有高解析 Hero／OG（需素材）與 `logo-white.jpg` 去留。已鏡像，`check-drive` 判定 `SYNCED`（0 待處理、0 卡住）。
+- handoff: 2026-11-24 收工：Phase 0 完成（保留測試公告）——刪 2505 重複 draft、09-12 直播改名 09-13 並加轉向、下架 3 支失效直播、新增 404 頁、修正 CMS slug、新增發布前檢查（`6760f03`）；2512 期週報與 11-22 直播已上線，三支直播都可嵌入。剩餘 Phase 0 只有高解析 Hero／OG（需素材）與 `logo-white.jpg` 去留。鏡像與 `check-drive` 已確認為 `SYNCED`。
 - MCP：notebooklm, notion
 
 ## 目前目標
@@ -86,3 +86,4 @@
 - 2026-11-24：上架 2512 期週報與 11-22 主日直播（`f5eYcDAGv-0`），11-15 取消「本週直播」；`astro build` 通過（136 頁）、部署成功（`726c95f`、`afe13bd`）。同時修正文件：`node_modules` 風險已過時、`sync_state` 與 `check-drive` 的差異、駕駛艙 head 落後；收工。
 - 2026-11-24：開啟 11-08／11-15 允許嵌入並實測 `playableInEmbed=true`；清理 4 筆舊直播的 `isCurrentWeek` 殘留。
 - 2026-11-24：Phase 0（保留測試公告）——刪 2505 重複 draft、09-12 直播改名 09-13 並加轉向、下架 3 支失效直播、新增 404 頁、修正 CMS slug、新增 `preflight-check.mjs`（接進發布流程）。
+- 2026-11-24：收工；文件與駕駛艙更新完成，鏡像與 Synology 同步確認 `SYNCED`。

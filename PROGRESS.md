@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-24T08:45:00+08:00
+- last_updated: 2026-11-24T08:50:00+08:00
 - sync_state: pending
-- handoff: 2026-11-24 上架 2512 期週報（2026.11.22）與 11-22 主日直播（`f5eYcDAGv-0`，信息：想不通的時候，進上帝的聖所，詩篇 73 篇），11-15 取消 `isCurrentWeek`。這支影片 oEmbed 正常回應，判斷**可嵌入**（與 11-08／11-15 不同）。另補記 2026-11-17 的隱私權政策頁（`543871c`）。本輪新增內容尚未鏡像到 Synology；開工時 `check-drive` 為 `SYNCED`，收工要再跑鏡像。
+- handoff: 2026-11-24 收工：2512 期週報與 11-22 直播已上線（`afe13bd`，線上 PDF 200、1,615,407 bytes），2026-11-17 隱私頁與 `node_modules` 舊紀錄已補正。11-22 影片可嵌入；11-08／11-15 仍禁止嵌入。本輪已 push，正在鏡像並等 Synology 上傳確認。下一步：YouTube 開嵌入、Phase 0 剩 404 頁等。
 - MCP：notebooklm, notion
 
 ## 目前目標
@@ -78,4 +78,4 @@
 - 2026-11-10：`afrokhl-alt` 接受邀請，CMS 登入成功；收工。
 - 2026-11-17：上架 2511 期週報與 11-15 主日直播，取消 11-01、11-08 的「本週直播」標記。
 - 2026-11-17：新增隱私權政策頁（`543871c`），Footer 加入連結。
-- 2026-11-24：上架 2512 期週報與 11-22 主日直播（`f5eYcDAGv-0`），11-15 取消「本週直播」；`astro build` 通過（136 頁）。同時修正文件：`node_modules` 風險已過時、`sync_state` 與 `check-drive` 的差異、駕駛艙 head 落後。
+- 2026-11-24：上架 2512 期週報與 11-22 主日直播（`f5eYcDAGv-0`），11-15 取消「本週直播」；`astro build` 通過（136 頁）、部署成功（`726c95f`、`afe13bd`）。同時修正文件：`node_modules` 風險已過時、`sync_state` 與 `check-drive` 的差異、駕駛艙 head 落後；收工。

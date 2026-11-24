@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-24T09:05:00+08:00
-- sync_state: pending
-- handoff: 2026-11-24 第二輪：11-08／11-15 已開啟允許嵌入，實測三支直播（含 11-22）都可嵌入；舊直播 `isCurrentWeek` 殘留已清。Phase 0 剩 404 頁、測試公告、重複 draft、09-12 檔名、3 支失效直播、CMS slug。本輪待鏡像確認。
+- last_updated: 2026-11-24T09:11:00+08:00
+- sync_state: synced
+- handoff: 2026-11-24 第二輪：11-08／11-15 已開啟允許嵌入，實測三支直播（含 11-22）都可嵌入；舊直播 `isCurrentWeek` 殘留已清（`c7c929d`）。Phase 0 剩 404 頁、測試公告、重複 draft、09-12 檔名、3 支失效直播、CMS slug。已鏡像，`check-drive` 判定 `SYNCED`（0 待處理、0 卡住）。
 - MCP：notebooklm, notion
 
 ## 目前目標

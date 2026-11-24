@@ -1,9 +1,9 @@
 # PROGRESS
 
 - last_machine: LAPTOP-IISERVR8
-- last_updated: 2026-11-24T09:11:00+08:00
-- sync_state: synced
-- handoff: 2026-11-24 第二輪：11-08／11-15 已開啟允許嵌入，實測三支直播（含 11-22）都可嵌入；舊直播 `isCurrentWeek` 殘留已清（`c7c929d`）。Phase 0 剩 404 頁、測試公告、重複 draft、09-12 檔名、3 支失效直播、CMS slug。已鏡像，`check-drive` 判定 `SYNCED`（0 待處理、0 卡住）。
+- last_updated: 2026-11-24T09:25:00+08:00
+- sync_state: pending
+- handoff: 2026-11-24 第三輪：Phase 0 完成（保留測試公告）：刪 2505 重複 draft、09-12 直播改名 09-13 並加轉向、下架 3 支失效直播、新增 404 頁、修正 CMS slug、新增發布前檢查。測試公告依指示保留。剩餘 Phase 0 只有高解析 Hero／OG（需素材）與 `logo-white.jpg` 去留。本輪待鏡像。
 - MCP：notebooklm, notion
 
 ## 目前目標
@@ -33,6 +33,7 @@
 - 2026-11-24 上架 2512 期週報（2026.11.22，1,615,407 bytes、4 頁）與 11-22 主日直播（`f5eYcDAGv-0`，信息：想不通的時候，進上帝的聖所，詩篇 73 篇）；11-15 取消 `isCurrentWeek`。影片 oEmbed 回應 200，判斷可嵌入。
 - 2026-11-24 在 YouTube Studio 開啟 11-08（`Y7HNCo-B_I4`）與 11-15（`Gke-Zx76yOg`）的「允許嵌入」；實測三支直播（含 11-22）皆 `playableInEmbed=true`、oEmbed 200。
 - 2026-11-24 清理舊直播檔殘留的 `isCurrentWeek: true`（2026-09-27、10-11、10-18、10-25 改 false）。
+- 2026-11-24 Phase 0（保留測試公告）：刪除 2505 重複 draft `2026-10-03.md`；`2026-09-12.md` 改名 `2026-09-13.md` 並加 `/media/live/2026-09-12` → `/media/live/2026-09-13/` 轉向；下架 3 支失效直播（2025-10-26 `oI5nph00Yjg` ERROR、2026-07-05 `_JRyhAcYmuM` LOGIN_REQUIRED、2026-10-11 `TchLYj4FprM` ERROR）；新增 `src/pages/404.astro`；CMS slug 改為 `{{date | date('YYYY-MM-DD')}}` 避開 UTC 前一天；新增 `scripts/preflight-check.mjs` 並接進 `publish-site.mjs`。
 
 ## 進行中
 
@@ -41,7 +42,7 @@
 ## 待辦
 
 1. FB 歷史素材庫 Phase A：建 Meta app、用 Graph API Explorer 打 `GET /me/accounts` 與 `GET /{page-id}/posts?limit=5`，確認自家粉專資料讀得到（約半天，不寫程式）。
-2. Phase 0 健檢修正（見駕駛艙「下一步」；隱私權政策頁已於 2026-11-17 完成，剩 404 頁等）。
+2. Phase 0 收尾：更換高解析 Hero／OG（需素材，至少 1920 寬）、決定是否移除未使用的 `src/assets/logo-white.jpg`（4000×3938、約 1.1MB）。
 3. 等使用者把照片／文件放進 `教會資料\`，盤點素材並挑選適合上網站的內容（相簿、教會簡介、場地照）。
 4. Phase 1.5：歷史週報 74 期匯入（2391–2465，2424 缺）。
 5. Phase 1：補牧師團隊、信仰宣言、教會簡介、交通資訊與 2026.04.12 相簿。
@@ -60,12 +61,15 @@
 - 歷史資料取得只剩 Graph API 一條路（官方粉專匯出已不可用）；若 API 也不通，只能人工逐本相簿下載，約 30 本、可分次完成。
 - 若貼文是先用個人帳號發布、再分享到粉專，不會出現在粉專 API，需人工補或放棄。
 - `教會資料\`（素材收件匣）已 gitignore，**只存在目前這台 LAPTOP-IISERVR8，不會透過 Git 或 Synology 同步**；換電腦就看不到，重要素材要另外備份。
+- 測試公告依 2026-11-24 指示保留置頂，不下架。
+- CMS slug 已改用 `{{date | date('YYYY-MM-DD')}}`，尚未從 `/admin` 實測；下次 CMS 新增直播或週報時要確認檔名等於日期。
+- `src/assets/logo-white.jpg` 未使用（4000×3938、約 1.1MB），待決定是否移除。
 
 ## 下一步
 
-1. 繼續 Phase 0：補 404 頁、下架測試公告、刪重複 draft（含 `2026-10-03.md`）、修正 09-12 檔名、下架 3 支失效直播、修正 CMS slug。
+1. 更換高解析 Hero／OG（需素材，至少 1920 寬），並決定是否移除未使用的 `src/assets/logo-white.jpg`。
 2. 使用者把照片／文件放進 `教會資料\`（一活動一資料夾、檔名帶日期）後盤點素材；或跑 FB 素材庫 Phase A（建 Meta app → Graph API Explorer 測 `me/accounts` 與 `/{page-id}/posts`）。
-3. 歷史週報 74 期（2391–2465，2424 缺）可在 Phase 0 後排入匯入。
+3. 歷史週報 74 期（2391–2465，2424 缺）匯入。
 
 ## 工作日誌
 
@@ -81,3 +85,4 @@
 - 2026-11-17：新增隱私權政策頁（`543871c`），Footer 加入連結。
 - 2026-11-24：上架 2512 期週報與 11-22 主日直播（`f5eYcDAGv-0`），11-15 取消「本週直播」；`astro build` 通過（136 頁）、部署成功（`726c95f`、`afe13bd`）。同時修正文件：`node_modules` 風險已過時、`sync_state` 與 `check-drive` 的差異、駕駛艙 head 落後；收工。
 - 2026-11-24：開啟 11-08／11-15 允許嵌入並實測 `playableInEmbed=true`；清理 4 筆舊直播的 `isCurrentWeek` 殘留。
+- 2026-11-24：Phase 0（保留測試公告）——刪 2505 重複 draft、09-12 直播改名 09-13 並加轉向、下架 3 支失效直播、新增 404 頁、修正 CMS slug、新增 `preflight-check.mjs`（接進發布流程）。

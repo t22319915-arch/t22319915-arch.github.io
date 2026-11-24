@@ -108,6 +108,10 @@ for (const p of INFRA_PATHS) {
   }
 }
 
+// ─── 3.5 發布前內容檢查（只警告，不阻擋） ─────────────────
+const preflight = run(process.execPath, [join(ROOT, 'scripts', 'preflight-check.mjs')], { allowFail: true });
+if (preflight) console.log(preflight);
+
 // ─── 4. 加入變更並提交 ─────────────────────────────────
 git(['fetch', 'origin', BRANCH]);
 git(['add', '-A']);

@@ -60,7 +60,9 @@ collections:
     extension: md
     format: frontmatter
     create: true
-    slug: "{{year}}-{{month}}-{{day}}"
+    # 檔名取內容日期（本地時區）。不用 {{year}}-{{month}}-{{day}}：
+    # Decap 的日期標籤以 UTC 計算，日期欄位存 00:00 時會變成前一天（2026-09-12 舊毛病）。
+    slug: "{{date | date('YYYY-MM-DD')}}"
     summary: "{{title}}（{{date | date('YYYY/MM/DD HH:mm')}}）"
     fields:
       - { label: 標題（例：2026.09.06 主日禮拜）, name: title, widget: string }
@@ -112,11 +114,12 @@ collections:
     extension: md
     format: frontmatter
     create: true
-    slug: "{{year}}-{{month}}-{{day}}"
+    # 檔名取內容日期（本地時區），避免 UTC 造成的前一天檔名
+    slug: "{{date | date('YYYY-MM-DD')}}"
     summary: "{{title}}"
     fields:
       - { label: 標題（例：2502期 2026.09.13）, name: title, widget: string }
-      - { label: 日期, name: date, widget: datetime, format: YYYY-MM-DD }
+      - { label: 日期, name: date, widget: datetime, format: YYYY-MM-DD, hint: 選主日日期；檔名會自動用這個日期 }
       - label: 週報 PDF
         name: pdf
         widget: file

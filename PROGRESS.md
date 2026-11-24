@@ -2,8 +2,8 @@
 
 - last_machine: LAPTOP-IISERVR8
 - last_updated: 2026-11-24T08:50:00+08:00
-- sync_state: pending
-- handoff: 2026-11-24 收工：2512 期週報與 11-22 直播已上線（`afe13bd`，線上 PDF 200、1,615,407 bytes），2026-11-17 隱私頁與 `node_modules` 舊紀錄已補正。11-22 影片可嵌入；11-08／11-15 仍禁止嵌入。本輪已 push，正在鏡像並等 Synology 上傳確認。下一步：YouTube 開嵌入、Phase 0 剩 404 頁等。
+- sync_state: synced
+- handoff: 2026-11-24 收工：2512 期週報與 11-22 直播已上線（`afe13bd`，線上 PDF 200、1,615,407 bytes），2026-11-17 隱私頁與 `node_modules` 舊紀錄已補正。11-22 影片可嵌入；11-08／11-15 仍禁止嵌入。已 push、鏡像完成，`check-drive` 判定 `SYNCED`（0 待處理、0 卡住）。下一步：YouTube 開嵌入、Phase 0 剩 404 頁等。
 - MCP：notebooklm, notion
 
 ## 目前目標
